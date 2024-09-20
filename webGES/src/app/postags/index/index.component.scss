@@ -1,0 +1,41 @@
+.v0a30 {
+  font-weight: 700;
+  color: red;
+
+  text-decoration: line-through;
+}
+
+.v31a60 {
+  font-weight: 700;
+  color: yellow;
+}
+
+.v61a90 {
+  font-weight: 700;
+  color: green;
+}
+
+.vmaior90 {
+  font-weight: 700;
+  color: blue;
+}
+
+:host ::ng-deep .row-status {
+  background-color: rgba(235, 72, 72, 0.15) !important;
+}
+
+.field{
+  display: flex;
+  flex-direction: column;
+  .label{
+    display: block;
+    margin-bottom: 5px;
+    color: black;
+  }
+  .input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+}
