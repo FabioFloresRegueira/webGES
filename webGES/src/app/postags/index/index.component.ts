@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Tags } from '../tags';
 import { PostagsService } from '../../postags.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { GlobalprimengModule } from '../../globalprimeng/globalprimeng.module';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
@@ -22,12 +23,12 @@ import { FormGroup } from '@angular/forms';
 export class IndexComponent {
 
   tagDialog: boolean = false;
-  frmTags!: FormGroup;
+  //frmTags!: FormGroup;
 
 
   postags: Tags[] = [];
   tagservico!: Tags;
-
+  iD!: number;
 
   selectedTags!: Tags[] | null;
   submitted: boolean = false;
@@ -44,10 +45,24 @@ export class IndexComponent {
   inativos = 2;
 
 
+  // formulario
+  frmTags = this.fb.group({
+    descricao: ['', Validators.required],
+    infor: ['', Validators.required],
+
+    address: this.fb.group({ // <- another group of element
+      street: [''],
+      postCode: ['', Validators.required]
+    })
+
+  });
+
+
   constructor(public postagsservice: PostagsService,
     //private themeservice: ThemeService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService){}
+    private confirmationService: ConfirmationService,
+    private fb: FormBuilder){}
 
 
     hideDialog() {
@@ -78,18 +93,9 @@ export class IndexComponent {
     }
 
     //--------revisar
-    NewPosTags() {
+    NovoRegistro() {
       //this.tagservico = {};
       this.submitted = false;
-      this.tagDialog = true;
-    }
-
-    editPostTags(iD: number) {
-      this.postags = { ...this.postags };
-      this.tagDialog = true;
-    }
-
-    viewerPostTags(iD: number) {
       this.tagDialog = true;
     }
 
@@ -101,11 +107,40 @@ export class IndexComponent {
       })
     */
 
+    EditarRegistro(iD: number) {
+      //this.postags = { ...this.postags };
+      this.submitted = false;
+      this.tagDialog = true;
+    }
+
+    gravaRegistro(iD: number){
+      this.confirmationService.confirm({
+        message: 'Confirma a alteração realizada ' + '?',
+        header: 'Alteração',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          /*
+          this.postagsservice.update(this.iD, this.frmTags.value ).subscribe(res => {
+            this.postags = this.postags.filter(item => item.iDTag !== iD);
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Atualizado', life: 3000 });
+            console.log('Registro atualizado com sucesso !');
+          })
+          */
+        }
+      });
+    }
+
+    viewerPostTags(iD: number) {
+      this.submitted = false;
+      this.tagDialog = true;
+    }
+
+
     //-------ok
     deletePosTag(iD:number){
       this.confirmationService.confirm({
         message: 'Tem certeza de que deseja excluir ' + '?',
-        header: 'Confirmação',
+        header: 'Exclusão',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.postagsservice.delete(iD).subscribe(res => {
@@ -120,7 +155,7 @@ export class IndexComponent {
     deleteSelectedPosTags() {
       this.confirmationService.confirm({
           message: 'Tem certeza de que deseja excluir os produtos selecionados?',
-          header: 'Confirmação',
+          header: 'Exclusão',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
               this.postags = this.postags.filter((val) => !this.selectedTags?.includes(val));

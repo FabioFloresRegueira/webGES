@@ -78,7 +78,7 @@
               label="Novo"
               icon="pi pi-plus"
               class="mr-2"
-              (onClick)="NewPosTags()"
+              (onClick)="NovoRegistro()"
               />
         </div>
         <div>
@@ -188,7 +188,7 @@
                     [rounded]="true"
                     [outlined]="true"
                     severity="success"
-                    (onClick)="editPostTags(postags.IDTag)"
+                    (onClick)="EditarRegistro(postags.IDTag)"
                      />
               </td>
               <td>
@@ -206,7 +206,7 @@
 
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-            No Total Existem {{ postags ? postags.length : 0 }} serviços.
+            Total de {{ postags ? postags.length : 0 }} registros.
         </div>
     </ng-template>
 
@@ -221,6 +221,40 @@
         styleClass="p-fluid">
             <ng-template pTemplate="content">
 
+              <p-card styleClass="formulario" class="flex justify-content-center">
+
+                <form [formGroup]="frmTags" novalidate>
+
+                  <td>
+                    <img
+                        [src]="'https://th.bing.com/th/id/OIP.pQyIgeAD4YQWnAZNYAr0tgHaGs?rs=1&pid=ImgDetMain'"
+                        width="50"
+                        class="shadow-4" />
+                  </td>
+
+                  <div class="field">
+                    <label for="descricao" class="block">Descrição do Serviço</label>
+                    <input type="text" pInputText placeholder="Desrição do Serviço" formControlName="descricao" />
+                    <small class="p-error block" *ngIf="
+                        frmTags.get('descricao')?.invalid && frmTags.get('descricao')?.dirty
+                      ">
+                     Preenchimento Obrigatório.</small>
+                  </div>
+
+                  <div class="field">
+                    <label for="infor" class="block">Informações</label>
+                    <textarea type="textarea" [rows]="10" [cols]=50 pInputTextarea placeholder="Detalhes do Serviço" formControlName="infor" ></textarea>
+                    <small class="p-error block" *ngIf="
+                        frmTags.get('infor')?.invalid && frmTags.get('infor')?.dirty
+                      ">
+                      Preenchimento Obrigatório.</small>
+                  </div>
+
+                </form>
+              </p-card>
+
+
+              <!--
               <form [formGroup]="frmTags" class="flex flex-column align-items-center gap-3">
 
                 <div class="field">
@@ -266,6 +300,8 @@
               </div>
 
               </form>
+            -->
+
             </ng-template>
 
             <ng-template pTemplate="footer">
@@ -278,7 +314,7 @@
                   label="Gravar"
                   icon="pi pi-check"
                   [text]="true"
-                  (onClick)="gravaPostags()" />
+                  (onClick)="gravaRegistro(iD)" />
             </ng-template>
 
   </p-dialog>

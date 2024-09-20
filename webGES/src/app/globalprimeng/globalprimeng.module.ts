@@ -13,6 +13,9 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule} from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [],
@@ -31,7 +34,10 @@ import { TagModule } from 'primeng/tag';
     ToastModule,
     ConfirmDialogModule,
     DialogModule,
-    TagModule
+    TagModule,
+    InputTextModule,
+    CardModule,
+    CalendarModule
   ]
 })
 export class GlobalprimengModule { }

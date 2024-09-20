@@ -24,18 +24,27 @@
   background-color: rgba(235, 72, 72, 0.15) !important;
 }
 
-.field{
-  display: flex;
-  flex-direction: column;
-  .label{
-    display: block;
-    margin-bottom: 5px;
-    color: black;
-  }
-  .input, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+:host .formulario {
+  width: 150%;
+}
+
+:host {
+  .field{
+    padding-bottom: 10px;
+
+    .label {
+      padding-bottom: 10px;
+      color: blue;
+    }
+
+    .input {
+      width: 100%;
+    }
+    .textarea {
+      width: 100%;
+    }
+
   }
 
 }
+

@@ -71,6 +71,7 @@ Run `yarn -v` = 1.22.19
 # exemplos
 https://www.itsolutionstuff.com/post/angular-17-crud-application-tutorial-exampleexample.html
 https://stackblitz.com/run?file=src%2Fapp%2Ftable-products-demo.html
+https://medium.com/@haseenakhader.uk/angular-reactive-form-using-primeng-and-its-validation-8baf6b9e7ed4
 
 # PRIMENG 
 npm install primeng
