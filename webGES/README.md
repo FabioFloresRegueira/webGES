@@ -72,6 +72,8 @@ Run `yarn -v` = 1.22.19
 https://www.itsolutionstuff.com/post/angular-17-crud-application-tutorial-exampleexample.html
 https://stackblitz.com/run?file=src%2Fapp%2Ftable-products-demo.html
 https://medium.com/@haseenakhader.uk/angular-reactive-form-using-primeng-and-its-validation-8baf6b9e7ed4
+https://therichpost.com/angular-16-node-js-express-mysql-example-crud-app/
+https://www.tektutorialshub.com/angular/setvalue-patchvalue-in-angular/#google_vignette
 
 # PRIMENG 
 npm install primeng
@@ -93,6 +95,19 @@ added 1 package, and audited 929 packages in 8s
 To address all issues (including breaking changes), run:
   npm audit fix --force
 Run `npm audit` for details.
+
+# instalando a biblioteca moment para conversões de datas 
+npm install moment
+https://momentjs.com/
+# ------------------
+added 2 packages, and audited 931 packages in 34s
+119 packages are looking for funding
+  run `npm fund` for details
+3 vulnerabilities (2 moderate, 1 high)
+To address all issues, run:
+  npm audit fix
+Run `npm audit` for details.
+
 
 
 # estrutura

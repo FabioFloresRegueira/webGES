@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -7,7 +7,8 @@ import { PostagsService } from '../../postags.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { GlobalprimengModule } from '../../globalprimeng/globalprimeng.module';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { isDate } from 'node:util/types';
+import moment from 'moment';
 @Component({
   selector: 'app-index',
   standalone: true,
@@ -20,61 +21,133 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrl: './index.component.scss',
   providers: [PostagsService, MessageService, ConfirmationService]
 })
-export class IndexComponent {
+
+export class IndexComponent implements OnInit {
 
   tagDialog: boolean = false;
-  //frmTags!: FormGroup;
-
+  isDisabled: boolean = false;
 
   postags: Tags[] = [];
-  tagservico!: Tags;
-  iD!: number;
+  registroCorrente: FormGroup;
+
+  chkTema: boolean = false;
 
   selectedTags!: Tags[] | null;
-  submitted: boolean = false;
+  operacaoMode: string = ''; // e-edição | i-inclusao | v-visualizacao
 
   optCategoria!: any[];
   optStatus!: any[];
-
+  minDate!: Date;
 
   ativos: number = 0;
-  vigencia0a30: number = 50;
-  vigencia31a60: number = 35;
-  vigencia61a90: number = 25;
-  vigenciamaior90: number = 10;
-  inativos = 2;
+  vigencia0a30: number = 0;
+  vigencia31a60: number = 0;
+  vigencia61a90: number = 0;
+  vigenciamaior90: number = 0;
+  inativos = 0;
 
 
-  // formulario
-  frmTags = this.fb.group({
-    descricao: ['', Validators.required],
-    infor: ['', Validators.required],
 
-    address: this.fb.group({ // <- another group of element
-      street: [''],
-      postCode: ['', Validators.required]
-    })
-
-  });
-
-
-  constructor(public postagsservice: PostagsService,
-    //private themeservice: ThemeService,
+   constructor(public postagsservice: PostagsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private fb: FormBuilder){}
+    private route: Router,
+    private fb: FormBuilder){
 
+      registroCorrente: FormGroup;
+      // INICIALIZANDO O FORMGROUP DENTRO DO CONSTRUTOR
+      this.registroCorrente = this.fb.group({
+        iDTag: [0, Validators.required],
+        descricao: ['', Validators.required],
+        categoria: ['', Validators.required],
+        infor: '',
+        vigencia: [new Date(), Validators.required],
+        Diasvigencia: 0,
+        status: [null, Validators.required],
+        created_at: [new Date(), Validators.required],
+        updated_at: new Date()
+      });
+    }
+    fetchPostags() {
+      this.postagsservice.getAll().subscribe({
+        next: (data) => {
+          this.postags = data;
+        },
+        error: (e) => console.error(e)
+      });
+    }
+
+    fetchBrowser(){
+       window.location.reload();
+    }
 
     hideDialog() {
       this.tagDialog = false;
-      this.submitted = false;
+    }
+
+    getTagStatus(status: number){
+      switch (status) {
+          case 1:
+              return 'success';
+          case 0:
+              return 'danger';
+          default: return 'success'
+
+      }
+    }
+
+    getTagVigencia(dias: number): "success" | "info" | "warning" | "danger" | "secondary" | "contrast" | undefined {
+
+      if (dias > 90) {
+         return "contrast";
+      } else if ( dias >=61 && dias <=90){
+         return "success";
+      } else if ( dias >=31 && dias <=60){
+        return "warning";
+      } else if ( dias <=30 ){
+        return "danger";
+      } else {
+        return "contrast";
+      }
+
     }
 
     ngOnInit(): void {
+      this.operacaoMode = '';
+
+      // Configura o refresh automático a cada 5 minutos
+      /*
+      setInterval(() => {
+        window.location.reload();
+      }, 300000); // 300000 milissegundos = 5 minutos
+      */
+
       this.postagsservice.getAll().subscribe((data: Tags[])=>{
         this.postags = data;
-        //console.log(this.postags);
-        this.ativos = this.postags.length;
+      })
+
+      this.postagsservice.getAllativos().subscribe((d1: Tags[])=>{
+        this.ativos = d1.length;
+      })
+
+      this.postagsservice.getAllinativos().subscribe((d2: Tags[])=>{
+        this.inativos = d2.length;
+      })
+
+      this.postagsservice.getAllvigencia0a30().subscribe((d3: Tags[])=>{
+        this.vigencia0a30 = d3.length;
+      })
+
+      this.postagsservice.getAllvigencia31a60().subscribe((d4: Tags[])=>{
+        this.vigencia31a60 = d4.length;
+      })
+
+      this.postagsservice.getAllvigencia61a90().subscribe((d5: Tags[])=>{
+        this.vigencia61a90 = d5.length;
+      })
+
+      this.postagsservice.getAllvigenciamaior90().subscribe((d6: Tags[])=>{
+        this.vigenciamaior90 = d6.length;
       })
 
       this.optStatus =[
@@ -83,104 +156,252 @@ export class IndexComponent {
       ]
 
       this.optCategoria = [
-        { name: 'CONTRATO', code: 'Contrato' },
-        { name: 'DOMINIO', code: 'Dominio' },
-        { name: 'EXTENSÃO GARANTIA', code: 'Extensão Garantia' },
-        { nome: 'LICENCIAMENTO', code: 'Licenciamento'}
+        { label: 'CONTRATO', value: 'Contrato' },
+        { label: 'CERTIFICADO', value: 'Certificado'},
+        { label: 'DOMINIO', value: 'Dominio' },
+        { label: 'EXTENSÃO GARANTIA', value: 'Extensão Garantia' },
+        { label: 'LICENCIAMENTO', value: 'Licenciamento'},
+        { label: 'HOSPEDAGEM', value: 'Hospedagem'}
       ];
 
-
     }
 
-    //--------revisar
-    NovoRegistro() {
-      //this.tagservico = {};
-      this.submitted = false;
-      this.tagDialog = true;
-    }
+  //-------ok
+  btnDelete(iD:number){
+    this.confirmationService.confirm({
+      message: 'Tem certeza de que deseja excluir o registro de iD: ' + iD + '?',
+      header: 'Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.postagsservice.delete(iD).subscribe({
+          next: (res) => {
+            this.postags = this.postags.filter(item => item.iDTag !== iD);
+            this.messageService.add({ severity: 'success', summary: 'Bem-sucedido', detail: 'O registro: ' + iD + ' foi deletado.', life: 3000 });
+          },
+          error: (e) => console.error(e)
+        });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'informativo', detail: 'A deleção do registro: ' + iD + ' foi cancelada.', life: 3000 });
+      }
+    });
+  }
+  //-------ok
+  btndeleteSelected() {
+    this.confirmationService.confirm({
+      message: 'Confirma a exclusão dos registros selecionados?',
+      header: 'Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const selectedIds = this.selectedTags?.map(record => record.iDTag);
+        selectedIds?.forEach(id => {
+          this.postagsservice.delete(id).subscribe({
+            next: () => {
+              this.postags = this.postags.filter(item => item.iDTag !== id);
+              this.messageService.add({ severity: 'success', summary: 'Bem-sucedido', detail: 'Os registros selecionados foram deletados.', life: 3000 });
+            },
+            error: (e) => console.error(e)
+          });
+        });
+        this.selectedTags = []; // Limpa a seleção após a exclusão
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'informativo', detail: 'A deleção dos registros selecionados foram cancelados.', life: 3000 });
+      }
+    });
+  }
 
-    /*
-    onSubmit(){
-      console.log(this.postags.value);
-      this.postagsservice.create(this.postags.value).subscribe((res:any) => {
-           console.log('Post created successfully!');
-      })
-    */
 
-    EditarRegistro(iD: number) {
-      //this.postags = { ...this.postags };
-      this.submitted = false;
-      this.tagDialog = true;
-    }
+  btnViewer(iD: number) {
+    console.log('Id: recebido ao clicar em [btnVIEWER]: ', iD); // Verifique se o ID está correto
+    this.operacaoMode = "v"; // visualizar.
+    this.isDisabled = true;
+    this.tagDialog = true;
 
-    gravaRegistro(iD: number){
+    const dados = this.postags.find(item => item.iDTag === iD);
+
+    const idtagAtNumber = dados?.iDTag ?? iD
+    const descrAtString = dados?.descricao ?? '';
+    const categAtString = dados?.categoria ?? '';
+    const inforAtString = dados?.infor ?? '';
+    const vigenciaAtDate = moment(dados?.vigencia).toDate();
+    const diasVigNumber = dados?.Diasvigencia ?? 0;
+    const statusAtNumber = dados?.status ?? 0 ;
+    const createdAtDate = dados?.created_at ? moment(dados?.created_at).toDate() : null;
+    const updatedAtDate = dados?.updated_at ? moment(dados?.updated_at).toDate() : null;
+
+    this.postagsservice.find(iD).subscribe({
+      next: (EditXdata) => {
+        //this.registroCorrente.patchValue(data); // Inicializa o formulário com os dados
+        this.registroCorrente.patchValue({
+          iDTag: idtagAtNumber,
+          descricao: descrAtString,
+          categoria: categAtString,
+          infor: inforAtString,
+          vigencia: vigenciaAtDate,
+          Diasvigencia: diasVigNumber,
+          status: statusAtNumber,
+          created_at: createdAtDate,
+          updated_at: updatedAtDate
+        });
+       // console.log('btnVIEWER: Estado do formulário: ', this.registroCorrente.value); // Verifique o estado do formulário
+      },
+      error: (e) => console.error(e)
+    });
+
+  }
+
+  btnNew() {
+    this.operacaoMode = "i"; // inclusao
+    this.isDisabled = false;
+    this.tagDialog = true;
+
+    this.registroCorrente.patchValue({
+      iDTag: 0,
+      descricao: '',
+      categoria: '',
+      infor: '',
+      vigencia: null,
+      Diasvigencia: 0,
+      status: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    });
+
+  }
+
+  btnEdit(iD: number) {
+    console.log('Id: recebido ao clicar em [btnEDIT]: ', iD); // Verifique se o ID está correto
+    this.operacaoMode = "e"; // edição
+    this.tagDialog = true;
+    this.isDisabled = false;
+
+    const dados = this.postags.find(item => item.iDTag === iD);
+
+    const idtagAtNumber = dados?.iDTag ?? iD
+    const descrAtString = dados?.descricao ;
+    const categAtString = dados?.categoria ;
+    const inforAtString = dados?.infor;
+    const vigenciaAtDate = moment(dados?.vigencia).toDate();
+    const diasVigNumber = dados?.Diasvigencia;
+    const statusAtNumber = dados?.status;
+    const createdAtDate = moment(dados?.created_at).toDate();
+    const updatedAtDate = moment(dados?.updated_at).toDate();
+
+    this.postagsservice.find(iD).subscribe({
+      next: (EditXdata) => {
+        //this.registroCorrente.patchValue(data); // Inicializa o formulário com os dados
+        this.registroCorrente.patchValue({
+          iDTag: idtagAtNumber,
+          descricao: descrAtString,
+          categoria: categAtString,
+          infor: inforAtString,
+          vigencia: vigenciaAtDate,
+          Diasvigencia: diasVigNumber,
+          status: statusAtNumber,
+          created_at: createdAtDate,
+          updated_at: updatedAtDate
+        });
+        //console.log('btnEdit: Estado do formulário: ', this.registroCorrente.value); // Verifique o estado do formulário
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+  btnConfirmar(){
+    if (this.operacaoMode ==='e') {
+
       this.confirmationService.confirm({
-        message: 'Confirma a alteração realizada ' + '?',
+        message: 'Confirma a alteração realizada no registro de iD: ' + this.registroCorrente.value.iDTag + " - " + this.registroCorrente.value.descricao  + '?',
         header: 'Alteração',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          /*
-          this.postagsservice.update(this.iD, this.frmTags.value ).subscribe(res => {
-            this.postags = this.postags.filter(item => item.iDTag !== iD);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Atualizado', life: 3000 });
-            console.log('Registro atualizado com sucesso !');
-          })
-          */
+          const dados = {
+            iDTag: Number(this.registroCorrente.value.iDTag),
+            descricao: this.registroCorrente.value.descricao,
+            categoria: this.registroCorrente.value.categoria,
+            infor: this.registroCorrente.value.infor,
+            vigencia: moment(this.registroCorrente.value.vigencia).toDate(),
+            Diasvigencia: Number(this.registroCorrente.value.Diasvigencia),
+            status: Number(this.registroCorrente.value.status),
+            created_at: moment(this.registroCorrente.value.created_at).toDate(),
+            updated_at: new Date(),
+          };
+
+          // Verifica se o registro já existe em postags
+          const index = this.postags.findIndex(item => item.iDTag === this.registroCorrente.value.iDTag);
+
+          if (index !== -1) {
+
+            // Atraves do indice, atualiza o item existente na lista de serviços (pastags)
+            this.postags[index] = dados;
+
+            // chama o serviço update para atualizar o registro atualizado no backend.
+            this.postagsservice.update(this.registroCorrente.value.iDTag, dados).subscribe({
+              next: (dados) => {
+                console.log(this.registroCorrente.value.status);
+                this.messageService.add({ severity: 'success', summary: 'Bem-sucedido', detail: 'Registro alterado com sucesso.', life: 3000 });
+                this.fetchPostags();
+                this.fetchBrowser();
+              },
+              error: (e) => console.error(e)
+            });
+
+          }
+          this.tagDialog = false;
+          this.isDisabled = false;
         }
       });
-    }
 
-    viewerPostTags(iD: number) {
-      this.submitted = false;
-      this.tagDialog = true;
-    }
+    } else if (this.operacaoMode ==='i') {
 
-
-    //-------ok
-    deletePosTag(iD:number){
       this.confirmationService.confirm({
-        message: 'Tem certeza de que deseja excluir ' + '?',
-        header: 'Exclusão',
+        message: 'Confirma a gravação do novo registro '+ this.registroCorrente.value.descricao + '?',
+        header: 'Inclusão',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.postagsservice.delete(iD).subscribe(res => {
-            this.postags = this.postags.filter(item => item.iDTag !== iD);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Deletado', life: 3000 });
-            console.log('Registro deletado com sucesso !');
-          })
-    }});
-    }
+          const dados = {
+            iDTag: Number(this.registroCorrente.value.iDTag),  // rever
+            descricao: this.registroCorrente.value.descricao,
+            categoria: this.registroCorrente.value.categoria,
+            infor: this.registroCorrente.value.infor,
+            vigencia: moment(this.registroCorrente.value.vigencia).toDate(),
+            Diasvigencia: Number(this.registroCorrente.value.Diasvigencia),  // poderia gravar a logo o calculo de dias da vigencia.
+            status: Number(this.registroCorrente.value.status),
+            created_at: new Date(),
+            updated_at: new Date(),
+          };
 
-    //--------revisar
-    deleteSelectedPosTags() {
-      this.confirmationService.confirm({
-          message: 'Tem certeza de que deseja excluir os produtos selecionados?',
-          header: 'Exclusão',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.postags = this.postags.filter((val) => !this.selectedTags?.includes(val));
-              this.selectedTags = null;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registros Deletados', life: 3000 });
+          const index = this.postags.findIndex(item => item.iDTag === this.registroCorrente.value.iDTag);
+
+          if (index === -1) {
+
+            //atualiza a lista postags
+            this.postags.push(dados);
+
+            // Chama o serviço para salvar o registro no backend
+            this.postagsservice.create(dados).subscribe({
+              next: (dados) => {
+                console.log(this.registroCorrente.value.descricao);
+                this.messageService.add({ severity: 'success', summary: 'Bem-sucedido', detail: 'Registro adicionado com sucesso.', life: 3000 });
+                this.fetchPostags();
+                this.fetchBrowser();
+              },
+              error: (e) => console.error(e)
+            });
           }
+
+          this.tagDialog = false;
+          this.isDisabled = false;
+        }
       });
+
+
+    } else {
+      this.hideDialog();
     }
 
-
-
-    gravaPostags() {
-      this.submitted = true;
-
-    }
-
-    findIndexById(id: number): number {
-      return 0;
-    }
-
-    createId(): string {
-      let id = '';
-      return id;
-    }
-
+  }
 
 
 

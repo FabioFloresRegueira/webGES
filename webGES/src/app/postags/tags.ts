@@ -1,6 +1,6 @@
 export interface Tags {
   iDTag: number;
-  descicao: string;
+  descricao: string;
   categoria: string;
   infor: string;
   vigencia: Date;

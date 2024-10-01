@@ -1,50 +1,35 @@
-.v0a30 {
-  font-weight: 700;
-  color: red;
-
-  text-decoration: line-through;
-}
-
-.v31a60 {
-  font-weight: 700;
-  color: yellow;
-}
-
-.v61a90 {
-  font-weight: 700;
-  color: green;
-}
-
-.vmaior90 {
-  font-weight: 700;
-  color: blue;
-}
 
 :host ::ng-deep .row-status {
-  background-color: rgba(235, 72, 72, 0.15) !important;
+  //background-color: rgba(235, 72, 72, 0.15) !important;
+  background-color:  darkgrey !important;
+  text-decoration: line-through;
+  color: whitesmoke;
 }
 
 :host .formulario {
-  width: 150%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(40, 38, 44, 0.15) !important;
 }
 
-:host {
-  .field{
+.field{
+  padding-bottom: 30px;
+
+  .block {
     padding-bottom: 10px;
+    color: blue;
+  }
 
-    .label {
-      padding-bottom: 10px;
-      color: blue;
-    }
-
-    .input {
-      width: 100%;
-    }
-    .textarea {
-      width: 100%;
-    }
-
+  .input {
+    width: 100%;
+  }
+  .textarea {
+    width: 100%;
   }
 
 }
 
+.disabled-card {
+  pointer-events: none; /* Impede interações */
+  opacity: 0.5; /* Aplica um efeito visual de desabilitado */
+}

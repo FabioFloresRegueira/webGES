@@ -2,35 +2,16 @@
 
   <p-toast />
 
+
+  <div class="temas align-items-center mb-4">
+    <a class="mr-3 cursos-pointer">
+      <p-inputSwitch [(ngModel)]="chkTema" />
+    </a>
+  </div>
+
   <div class="titulo align-items-center mb-4">
     <h1>Gestão Eletrônica de Serviços | Vigências</h1>
   </div>
-
-  <!--
-  <div class="temas align-items-center mb-4">
-    <a (click)="changeTheme('saga-blue')" class="mr-3 cursos-pointer">
-      <p-button label="saga-blue" [link]="true" />
-    </a>
-    <a (click)="changeTheme('vela-blue')" class="mr-3 cursos-pointer">
-      <p-button label="vela-blue" [link]="true" />
-    </a>
-    <a (click)="changeTheme('arya-blue')" class="mr-3 cursos-pointer">
-      <p-button label="arya-blue" [link]="true" />
-    </a>
-    <a (click)="changeTheme('md-light-indigo')" class="mr-3 cursos-pointer">
-      <p-button label="md-light-indigo" [link]="true" />
-    </a>
-    <a (click)="changeTheme('md-dark-indigo')" class="mr-3 cursos-pointer">
-      <p-button label="md-dark-indigo" [link]="true" />
-    </a>
-    <a (click)="changeTheme('bootstrap4-light-purple')" class="mr-3 cursos-pointer">
-      <p-button label="bootstrap4-light-purple" [link]="true" />
-    </a>
-    <a (click)="changeTheme('bootstrap4-dark-purple')" class="mr-3 cursos-pointer">
-      <p-button label="bootstrap4-dark-purple" [link]="true" />
-    </a>
-  </div>
-  -->
 
   <div class="card-R flex justify-content-center">
 
@@ -41,7 +22,7 @@
 
     <div class="graf">
       <p-knob [(ngModel)]="vigencia0a30" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>0 até 30</span>
+      <span>até 30</span>
     </div>
 
     <div class="graf">
@@ -78,7 +59,7 @@
               label="Novo"
               icon="pi pi-plus"
               class="mr-2"
-              (onClick)="NovoRegistro()"
+              (onClick)="btnNew()"
               />
         </div>
         <div>
@@ -86,7 +67,7 @@
               severity="danger"
               label="Excluir"
               icon="pi pi-trash"
-              (onClick)="deleteSelectedPosTags()"
+              (onClick)="btndeleteSelected()"
               [disabled]="!selectedTags || !selectedTags.length"
               />
         </div>
@@ -129,12 +110,14 @@
               <th style="width: 4rem">
                 <p-tableHeaderCheckbox />
               </th>
-              <th pSortableColumn="iDTag" style="min-width:15rem">Id <p-sortIcon field="iDTag" /> </th>
-              <th pSortableColumn="descricao" style="min-width:15rem">Descrição <p-sortIcon field="descricao" /> </th>
-              <th pSortableColumn="categoria" style="min-width:15rem">Categoria <p-sortIcon field="categoria" /> </th>
-              <th pSortableColumn="vigencia" style="min-width:15rem">Expira em <p-sortIcon field="vigencia" /> </th>
+              <th pSortableColumn="status"       style="min-width:7rem">Status <p-sortIcon field="status" /> </th>
+              <th pSortableColumn="iDTag"        style="min-width:5rem">Id <p-sortIcon field="iDTag" /> </th>
+              <th pSortableColumn="descricao"    style="min-width:15rem">Descrição <p-sortIcon field="descricao" /> </th>
+              <th pSortableColumn="categoria"    style="min-width:15rem">Categoria <p-sortIcon field="categoria" /> </th>
+              <th pSortableColumn="vigencia"     style="min-width:15rem">Expira em <p-sortIcon field="vigencia" /> </th>
               <th pSortableColumn="Diasvigencia" style="min-width:15rem">Dias de Vigencia <p-sortIcon field="Diasvigencia" /></th>
-              <th pSortableColumn="status" style="min-width:15rem">Status <p-sortIcon field="status" /> </th>
+              <th pSortableColumn="created_at"   style="min-width:15rem">Criado em <p-sortIcon field="created_at" /></th>
+              <th pSortableColumn="updated_at"   style="min-width:15rem">Ultima atualização <p-sortIcon field="updated_at" /></th>
               <th></th>
               <th></th>
               <th></th>
@@ -147,26 +130,26 @@
               <td>
                 <p-tableCheckbox [value]="postags" />
               </td>
+              <td>
+                <p-tag
+                [value]=""
+                [rounded]="true"
+                [severity]="getTagStatus(postags.status)"
+               />
+               </td>
               <td>{{ postags.iDTag }}</td>
               <td>{{ postags.descricao }}</td>
               <td>{{ postags.categoria }}</td>
-              <!--
-              <td>
-                <div [ngClass]="{'outofstock': postags.categoria === 'Contrato', 'lowstock': postags.categoria === 'Dominio', 'instock': postags.categoria ==='Licenciamento' }"]>
-                  {{postags.categoria}}
-                </div>
-              </td>
-              -->
               <td>{{ postags.vigencia }}</td>
-              <td>{{ postags.Diasvigencia}}</td>
-
-              <!--
               <td>
-                <p-tag [value]="postags.status" [severity]="getSeverity(postags.status)" />
+                <p-tag
+                  [value]="postags.Diasvigencia"
+                  [rounded]="true"
+                  [severity]="getTagVigencia(postags.Diasvigencia)"
+                 />
               </td>
-              -->
-
-              <td>{{ postags.status}}</td>
+              <td>{{ postags.created_at}}</td>
+              <td>{{ postags.updated_at}}</td>
 
               <td>
                 <p-button
@@ -176,7 +159,7 @@
                     [rounded]="true"
                     [outlined]="true"
                     severity="info"
-                    (onClick)="viewerPostTags(postags.IDTag)"
+                    (onClick)="btnViewer(postags.iDTag)"
                      />
               </td>
 
@@ -188,7 +171,7 @@
                     [rounded]="true"
                     [outlined]="true"
                     severity="success"
-                    (onClick)="EditarRegistro(postags.IDTag)"
+                    (onClick)="btnEdit(postags.iDTag)"
                      />
               </td>
               <td>
@@ -198,7 +181,7 @@
                     severity="danger"
                     [rounded]="true"
                     [outlined]="true"
-                    (onClick)="deletePosTag(postags.iDTag)"
+                    (onClick)="btnDelete(postags.iDTag)"
                      />
               </td>
           </tr>
@@ -206,7 +189,7 @@
 
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-            Total de {{ postags ? postags.length : 0 }} registros.
+          Total de {{ postags ? postags.length : 0 }} registros.
         </div>
     </ng-template>
 
@@ -216,14 +199,14 @@
   <p-dialog
         [(visible)]="tagDialog"
         [style]="{ width: '450px' }"
-        header="Detalhes do Serviço"
+        [header]="this.operacaoMode ==='v' ? 'VISUALIZAR' : this.operacaoMode === 'i' ? 'NOVO' : this.operacaoMode === 'e' ? 'EDITAR' : 'operacao invalida !'"
         [modal]="true"
         styleClass="p-fluid">
             <ng-template pTemplate="content">
 
-              <p-card styleClass="formulario" class="flex justify-content-center">
+              <p-card styleClass="formulario" class="flex justify-content-center" [ngClass]="{'disabled-card': isDisabled}">
 
-                <form [formGroup]="frmTags" novalidate>
+                <form [formGroup]="registroCorrente" novalidate>
 
                   <td>
                     <img
@@ -234,73 +217,73 @@
 
                   <div class="field">
                     <label for="descricao" class="block">Descrição do Serviço</label>
-                    <input type="text" pInputText placeholder="Desrição do Serviço" formControlName="descricao" />
-                    <small class="p-error block" *ngIf="
-                        frmTags.get('descricao')?.invalid && frmTags.get('descricao')?.dirty
-                      ">
+                    <input type="text" pInputText
+                      placeholder="Desrição do Serviço"
+                      id="descricao"
+                      name="descricao"
+                      formControlName="descricao" required
+                      />
+                      <!--[readonly]="this.operacaoMode ==='v' ? 'true' : 'false'"-->
+                     <small class="p-error block" *ngIf=" registroCorrente.get('descricao')?.invalid && registroCorrente.get('descricao')?.dirty">
                      Preenchimento Obrigatório.</small>
                   </div>
 
                   <div class="field">
+                    <label for="categoria" class="block">Categoria</label>
+                    <span class="ui-float-label">
+                    <p-dropdown [options]="optCategoria"
+                      placeholder="Categoria do Serviço"
+                      id="categoria"
+                      name="categoria"
+                      formControlName="categoria"
+                      [style]="{'width':'100%'}" [required]="true"></p-dropdown>
+                      <small class="p-error block" *ngIf=" registroCorrente.get('categoria')?.invalid && registroCorrente.get('categoria')?.dirty">
+                        Preenchimento Obrigatório.</small>
+                    </span>
+
+                  </div>
+
+                  <div class="field">
                     <label for="infor" class="block">Informações</label>
-                    <textarea type="textarea" [rows]="10" [cols]=50 pInputTextarea placeholder="Detalhes do Serviço" formControlName="infor" ></textarea>
-                    <small class="p-error block" *ngIf="
-                        frmTags.get('infor')?.invalid && frmTags.get('infor')?.dirty
-                      ">
+                    <textarea type="textarea" [rows]="10" [cols]="50" pInputTextarea
+                      placeholder="Detalhes do Serviço"
+                      id="infor"
+                      name="infor"
+                      (reset)="false"
+                      formControlName="infor" required
+                      ></textarea>
+                    <small class="p-error block" *ngIf=" registroCorrente.get('infor')?.invalid && registroCorrente.get('infor')?.dirty">
                       Preenchimento Obrigatório.</small>
                   </div>
 
+                  <div class="field">
+                    <span class="ui-float-label">
+                    <p-calendar
+                      id="vigencia"
+                      name="vigencia"
+                      formControlName="vigencia"
+                      [showIcon]="true"
+                      [minDate]="minDate" />
+                      <!-- [disabled]="this.operacaoMode ==='v' ? true : false"-->
+                    <label for="vigencica">Vigência</label>
+                    </span>
+                  </div>
+
+                  <div class="field">
+                    <label for="categoria" class="block">Status</label>
+                    <span class="ui-float-label">
+                    <p-dropdown [options]="optStatus"
+                      placeholder="Status do Serviço"
+                      id="status"
+                      name="status"
+                      formControlName="status"
+                      [style]="{'width':'100%'}" [required]="true"></p-dropdown>
+                    </span>
+                  </div>
+
                 </form>
+
               </p-card>
-
-
-              <!--
-              <form [formGroup]="frmTags" class="flex flex-column align-items-center gap-3">
-
-                <div class="field">
-
-                  <td>
-                    <img
-                        [src]="'https://th.bing.com/th/id/OIP.pQyIgeAD4YQWnAZNYAr0tgHaGs?rs=1&pid=ImgDetMain'"
-                        width="50"
-                        class="shadow-4" />
-                  </td>
-
-                  <label for="descricao">Descricao</label>
-                  <input
-                      type="text"
-                      pInputText
-                      id="descricao"
-                      [(ngModel)]="tagservico.descicao"
-                      required
-                      autofocus />
-                  <small class="p-error" *ngIf="submitted && !tagservico.descicao">
-                      campo obrigatório!, informe a descrição do serviço.
-                  </small>
-              </div>
-
-              <div class="field">
-                <label for="infor">Informações</label>
-                <textarea
-                    id="infor"
-                    pInputTextarea
-                    [(ngModel)]="tagservico.infor"
-                    required
-                    rows="10"
-                    cols="20">
-                </textarea>
-              </div>
-
-              <div class="field">
-                <label for="categoria">Categoria</label>
-                <p-dropdown
-                  formControlName="selectedCity"
-                  optionLabel="name"
-                  placeholder="Select a City" />
-              </div>
-
-              </form>
-            -->
 
             </ng-template>
 
@@ -311,10 +294,10 @@
                   [text]="true"
                   (onClick)="hideDialog()" />
               <p-button
-                  label="Gravar"
+                  label="Confirmar"
                   icon="pi pi-check"
                   [text]="true"
-                  (onClick)="gravaRegistro(iD)" />
+                  (onClick)="btnConfirmar()" />
             </ng-template>
 
   </p-dialog>

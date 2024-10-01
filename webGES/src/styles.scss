@@ -4,8 +4,8 @@
 @import "primeicons/primeicons.css";
 
 /* Temas */
-@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 @import "primeng/resources/themes/bootstrap4-light-purple/theme.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 @import "primeng/resources/themes/bootstrap4-dark-blue/theme.css";
 @import "primeng/resources/themes/bootstrap4-dark-purple/theme.css";
 @import "primeng/resources/themes/md-light-indigo/theme.css";
@@ -75,7 +75,7 @@ body {
 }
 
 .temas {
-  text-align: center;
+  text-align: end;
   margin-bottom: 10px;
 }
 
@@ -84,13 +84,14 @@ body {
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
+  text-align: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  text-align: center;
   .graf {
     padding-right: 50px;
   }
+
 }
 
 .card-C {
