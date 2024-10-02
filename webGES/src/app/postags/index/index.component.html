@@ -1,17 +1,45 @@
+<div class="layout-topbar">
+
+  <!--
+  <a class="layout-topbar-logo" routerLink="">
+      <img src="assets/geslogo.jpeg" width="50px" alt="logo">
+      <span>WebGES</span>
+  </a>
+
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" >
+      <i class="pi pi-bars"></i>
+  </button>
+
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
+      <i class="pi pi-ellipsis-v"></i>
+  </button>
+  -->
+
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" >
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <div class="p-toolbar-group-center">
+    <h1>Gestão Eletrônica de Serviços</h1>
+  </div>
+
+  <div #topbarmenu class="layout-topbar-menu">
+      <button class="p-link layout-topbar-button">
+          <i class="pi pi-user"></i>
+          <span>Profile</span>
+      </button>
+      <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
+          <i class="pi pi-cog"></i>
+          <span>Settings</span>
+      </button>
+  </div>
+</div>
+
+
+
 <div class="container">
 
   <p-toast />
-
-
-  <div class="temas align-items-center mb-4">
-    <a class="mr-3 cursos-pointer">
-      <p-inputSwitch [(ngModel)]="chkTema" />
-    </a>
-  </div>
-
-  <div class="titulo align-items-center mb-4">
-    <h1>Gestão Eletrônica de Serviços | Vigências</h1>
-  </div>
 
   <div class="card-R flex justify-content-center">
 
@@ -22,22 +50,22 @@
 
     <div class="graf">
       <p-knob [(ngModel)]="vigencia0a30" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>até 30</span>
+      <span>até 30 dias</span>
     </div>
 
     <div class="graf">
       <p-knob [(ngModel)]="vigencia31a60" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>31 até 60</span>
+      <span>31 até 60 dias</span>
     </div>
 
     <div class="graf">
       <p-knob [(ngModel)]="vigencia61a90" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>61 até 90</span>
+      <span>61 até 90 dias</span>
     </div>
 
     <div class="graf">
       <p-knob [(ngModel)]="vigenciamaior90" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span> maior que 90</span>
+      <span> maior que 90 dias</span>
     </div>
 
     <div class="graf">
@@ -47,8 +75,6 @@
 
   </div>
 
-
-
   <div class="card-C">
 
     <p-toolbar styleClass="mb-4 gap-2">
@@ -57,6 +83,7 @@
           <p-button
               severity="success"
               label="Novo"
+              [rounded]="true"
               icon="pi pi-plus"
               class="mr-2"
               (onClick)="btnNew()"
@@ -66,6 +93,7 @@
         <p-button
               severity="danger"
               label="Excluir"
+              [rounded]="true"
               icon="pi pi-trash"
               (onClick)="btndeleteSelected()"
               [disabled]="!selectedTags || !selectedTags.length"
@@ -75,13 +103,12 @@
     </p-toolbar>
 
 
-    <p-table [value]="postags"
+    <p-table #dt  [value]="postags"
       [tableStyle]="{ 'min-width': '50rem' }"
       [paginator]="true"
       [rows]="6"
       [rowsPerPageOptions]="[6, 18, 36]"
-
-      [globalFilterFields]="['descricao', 'categoria', 'vigencia', 'Diasvigencia', 'status']"
+      [globalFilterFields]="['status', 'Id', 'descricao', 'categoria', 'vigencia', 'Diasvigencia', 'created_at', 'updated_at']"
       [(selection)]="selectedTags"
       [rowHover]="true"
       dataKey="iDTag"
@@ -89,21 +116,19 @@
       [showCurrentPageReport]="true"
       >
 
-      <!--
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
-            <h5 class="m-0">Localizando Serviços</h5>
+            <h2 class="m-0">Boas-vindas ao Controle de Vigências e Renovações</h2>
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
                     pInputText
                     type="text"
-                    (input)="dt.filterGlobal($event.target.value, 'contains')"
-                    placeholder="Localizar..." />
+                    (input)="filterGlobal($event)"
+                    placeholder="Procurar..." />
             </span>
         </div>
       </ng-template>
-      -->
 
       <ng-template pTemplate="header">
           <tr>

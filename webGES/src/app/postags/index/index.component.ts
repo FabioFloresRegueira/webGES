@@ -9,6 +9,8 @@ import { GlobalprimengModule } from '../../globalprimeng/globalprimeng.module';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { isDate } from 'node:util/types';
 import moment from 'moment';
+import { AfterViewInit, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-index',
   standalone: true,
@@ -32,6 +34,8 @@ export class IndexComponent implements OnInit {
 
   chkTema: boolean = false;
 
+  @ViewChild('dt') dt!: Table;
+
   selectedTags!: Tags[] | null;
   operacaoMode: string = ''; // e-edição | i-inclusao | v-visualizacao
 
@@ -45,7 +49,6 @@ export class IndexComponent implements OnInit {
   vigencia61a90: number = 0;
   vigenciamaior90: number = 0;
   inativos = 0;
-
 
 
    constructor(public postagsservice: PostagsService,
@@ -67,6 +70,7 @@ export class IndexComponent implements OnInit {
         created_at: [new Date(), Validators.required],
         updated_at: new Date()
       });
+
     }
     fetchPostags() {
       this.postagsservice.getAll().subscribe({
@@ -110,6 +114,22 @@ export class IndexComponent implements OnInit {
         return "contrast";
       }
 
+    }
+
+
+    ngAfterViewInit() {
+        // Agora 'dt' deve estar inicializado
+        //console.log(this.dt); // Verifique se 'dt' está definido aqui
+    }
+
+    filterGlobal(event: Event) {
+      const inputElement = event.target as HTMLInputElement;
+      const value = inputElement.value;
+      if (this.dt) {
+            this.dt.filterGlobal(value, 'contains');
+      } else {
+            console.error('dt não está definido');
+      }
     }
 
     ngOnInit(): void {

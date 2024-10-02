@@ -53,6 +53,9 @@
 @import "primeng/resources/themes/rhea/theme.css";
 
 
+.container{
+  padding-top: 70px;
+}
 
 html {
   font-size: 14px;
@@ -79,6 +82,7 @@ body {
   margin-bottom: 10px;
 }
 
+
 .card-R {
   background: var(--surface-card);
   padding: 2rem;
@@ -94,12 +98,14 @@ body {
 
 }
 
+
 .card-C {
   background: var(--surface-card);
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
 }
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
