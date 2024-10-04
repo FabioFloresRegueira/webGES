@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, LOCALE_ID } from '@angular/core';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -11,13 +11,16 @@ import { isDate } from 'node:util/types';
 import moment from 'moment';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
+
+
 @Component({
   selector: 'app-index',
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
-    GlobalprimengModule
+    GlobalprimengModule,
+
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss',
@@ -422,7 +425,6 @@ export class IndexComponent implements OnInit {
     }
 
   }
-
 
 
 }

@@ -1,58 +1,4 @@
-
-:host ::ng-deep .row-status {
-  //background-color: rgba(235, 72, 72, 0.15) !important;
-  background-color:  darkgrey !important;
-  text-decoration: line-through;
-  color: whitesmoke;
-}
-
-:host .formulario {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(40, 38, 44, 0.15) !important;
-}
-
-.field{
-  padding-bottom: 30px;
-
-  .block {
-    padding-bottom: 10px;
-    color: blue;
-  }
-
-  .input {
-    width: 100%;
-  }
-  .textarea {
-    width: 100%;
-  }
-
-}
-
-.disabled-card {
-  pointer-events: none; /* Impede interações */
-  opacity: 0.5; /* Aplica um efeito visual de desabilitado */
-}
-
-
-
-.flex {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.flex .p-input-icon-left {
-  display: flex;
-  align-items: center;
-}
-
-.flex input {
-  margin-left: 3px; /* Ajuste o espaçamento conforme necessário */
-  width: 400px;
-}
-
-
+// Barra superior topbar
 .layout-topbar {
   position: fixed;
   height: 5rem;
@@ -67,8 +13,6 @@
   align-items: center;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
 }
-
-
 .layout-topbar .layout-topbar-logo {
   display: flex;
   align-items: center;
@@ -136,7 +80,6 @@
 .layout-topbar .layout-topbar-menu .layout-topbar-button {
   margin-left: 1rem;
 }
-
 @media (max-width: 991px) {
   .layout-topbar {
     justify-content: space-between;
@@ -189,4 +132,103 @@
     font-weight: medium;
     display: block;
   }
+}
+//
+
+
+// linha da grid status=0 - inativo
+:host ::ng-deep .row-status {
+  //background-color: rgba(235, 72, 72, 0.15) !important;
+  background-color:  darkgrey !important;
+  text-decoration: line-through;
+  color: whitesmoke;
+}
+//
+
+
+// ref. caption de boas-vindas e campo de pesquiesa
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex .p-input-icon-left {
+  display: flex;
+  align-items: center;
+}
+
+.flex input {
+  margin-left: 3px; /* Ajuste o espaçamento conforme necessário */
+  width: 400px;
+}
+//
+
+/*
+:host .formulario {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(40, 38, 44, 0.15) !important;
+}
+*/
+
+
+
+/*
+.field{
+
+  padding-bottom: 30px;
+
+  .block {
+    padding-bottom: 15px;
+    color: blue;
+  }
+
+  .input {
+    width: 100%;
+  }
+  .textarea {
+    width: 100%;
+  }
+
+}
+*/
+
+.disabled-card {
+  pointer-events: none; /* Impede interações */
+  opacity: 0.5; /* Aplica um efeito visual de desabilitado */
+}
+//
+
+
+.frmrow{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+
+}
+
+.frmcols{
+  padding-right: 20px;
+  border-radius: 10px;
+
+  .input {
+    width: 100%;
+  }
+
+  .label {
+    margin-bottom: 50px;
+  }
+
+  .textarea {
+    width: 100%;
+  }
+
+  .block {
+    padding-bottom: 15px;
+    color: blue;
+  }
+
+  
 }

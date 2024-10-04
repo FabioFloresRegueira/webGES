@@ -178,8 +178,7 @@
 
               <td>
                 <p-button
-
-                    icon="pi pi-info-circle"
+                    icon="pi pi-eye"
                     class="mr-2"
                     [rounded]="true"
                     [outlined]="true"
@@ -190,7 +189,6 @@
 
               <td>
                 <p-button
-
                     icon="pi pi-pencil"
                     class="mr-2"
                     [rounded]="true"
@@ -201,7 +199,6 @@
               </td>
               <td>
                 <p-button
-
                     icon="pi pi-trash"
                     severity="danger"
                     [rounded]="true"
@@ -223,16 +220,93 @@
 
   <p-dialog
         [(visible)]="tagDialog"
-        [style]="{ width: '450px' }"
+        [style]="{ width: '850px' }"
         [header]="this.operacaoMode ==='v' ? 'VISUALIZAR' : this.operacaoMode === 'i' ? 'NOVO' : this.operacaoMode === 'e' ? 'EDITAR' : 'operacao invalida !'"
         [modal]="true"
         styleClass="p-fluid">
             <ng-template pTemplate="content">
 
-              <p-card styleClass="formulario" class="flex justify-content-center" [ngClass]="{'disabled-card': isDisabled}">
+              <p-card styleClass="formulario" class="card-frm" [ngClass]="{'disabled-card': isDisabled}">
 
                 <form [formGroup]="registroCorrente" novalidate>
 
+                  <div class="frmrow">
+
+                    <div class="frmcols">
+
+                      <div class="field">
+                        <label for="descricao" class="block">Descrição do Serviço</label>
+                        <input type="text" pInputText
+                          placeholder="Desrição do Serviço"
+                          id="descricao"
+                          name="descricao"
+                          formControlName="descricao" required
+                          />
+                         <small class="p-error block" *ngIf=" registroCorrente.get('descricao')?.invalid && registroCorrente.get('descricao')?.dirty">
+                         Preenchimento Obrigatório.</small>
+                      </div>
+
+                      <div class="field">
+                        <label for="categoria" class="block">Categoria</label>
+                        <span class="ui-float-label">
+                        <p-dropdown [options]="optCategoria"
+                          placeholder="Categoria do Serviço"
+                          id="categoria"
+                          name="categoria"
+                          formControlName="categoria"
+                          [style]="{'width':'100%'}" [required]="true"></p-dropdown>
+                          <small class="p-error block" *ngIf=" registroCorrente.get('categoria')?.invalid && registroCorrente.get('categoria')?.dirty">
+                            Preenchimento Obrigatório.</small>
+                        </span>
+                      </div>
+
+                      <div class="field">
+                        <label for="categoria" class="block">Status</label>
+                        <span class="ui-float-label">
+                        <p-dropdown [options]="optStatus"
+                          placeholder="Status do Serviço"
+                          id="status"
+                          name="status"
+                          formControlName="status"
+                          [style]="{'width':'100%'}" [required]="true"></p-dropdown>
+                        </span>
+                      </div>
+
+                      <div class="field">
+                        <label for="infor" class="block">Informações</label>
+                        <textarea type="textarea" [rows]="10" [cols]="50" pInputTextarea
+                          placeholder="Detalhes do Serviço"
+                          id="infor"
+                          name="infor"
+                          (reset)="false"
+                          formControlName="infor" required
+                          ></textarea>
+                        <small class="p-error block" *ngIf=" registroCorrente.get('infor')?.invalid && registroCorrente.get('infor')?.dirty">
+                          Preenchimento Obrigatório.</small>
+                      </div>
+
+                    </div>
+
+                    <div class="frmcols">
+                      <div class="field">
+                        <label for="vigencica" class="block">Vigência</label>
+                        <span class="ui-float-label">
+                        <p-calendar
+                          id="vigencia"
+                          name="vigencia"
+                          dateFormat="dd/mm/yy"
+                          [inline]="true"
+                          formControlName="vigencia"
+                          [showIcon]="true"
+                          [minDate]="minDate" />
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <!--
                   <td>
                     <img
                         [src]="'https://th.bing.com/th/id/OIP.pQyIgeAD4YQWnAZNYAr0tgHaGs?rs=1&pid=ImgDetMain'"
@@ -248,7 +322,6 @@
                       name="descricao"
                       formControlName="descricao" required
                       />
-                      <!--[readonly]="this.operacaoMode ==='v' ? 'true' : 'false'"-->
                      <small class="p-error block" *ngIf=" registroCorrente.get('descricao')?.invalid && registroCorrente.get('descricao')?.dirty">
                      Preenchimento Obrigatório.</small>
                   </div>
@@ -289,7 +362,6 @@
                       formControlName="vigencia"
                       [showIcon]="true"
                       [minDate]="minDate" />
-                      <!-- [disabled]="this.operacaoMode ==='v' ? true : false"-->
                     <label for="vigencica">Vigência</label>
                     </span>
                   </div>
@@ -305,6 +377,9 @@
                       [style]="{'width':'100%'}" [required]="true"></p-dropdown>
                     </span>
                   </div>
+                -->
+
+
 
                 </form>
 

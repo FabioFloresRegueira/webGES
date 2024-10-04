@@ -20,7 +20,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
+import { ListboxModule } from 'primeng/listbox';
+//import { OrderListModule } from 'primeng/orderlist';
 @NgModule({
   declarations: [],
   imports: [
@@ -44,8 +45,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     CalendarModule,
     DropdownModule,
     RadioButtonModule,
-    InputSwitchModule
-
+    InputSwitchModule,
+    ListboxModule,
+    //OrderListModule
   ]
 })
 export class GlobalprimengModule { }
