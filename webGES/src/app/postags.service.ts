@@ -9,7 +9,8 @@ import { Tags } from './postags/tags';
 })
 export class PostagsService {
 
-  private apiURL = "http://localhost:3001/monitorar/api/tags";
+  //private apiURL = "http://localhost:3001/monitorar/api/tags";
+  private apiURL = "https://fabio4678.c44.integrator.host/monitorar/api/tags";
 
   httpOptions = {
     headers: new HttpHeaders({
