@@ -110,6 +110,10 @@ To address all issues, run:
 Run `npm audit` for details.
 
 
+# Analisador de pacotes Webpack - Visualize o tamanho dos arquivos de saída do webpack com um mapa de árvore interativo com zoom.
+run npm install --save-dev webpack-bundle-analyzer
+https://stackoverflow.com/questions/55803291/angular-main-js-file-large-size
+https://stackoverflow.com/questions/61177589/what-should-i-adjusting-budget-size-to-in-angular-json
 
 # estrutura
 ng generate component postags/index
@@ -118,4 +122,4 @@ ng generate service postags
 ng generate module globalprimeng
 
 
-
+ng build --configuration production 
