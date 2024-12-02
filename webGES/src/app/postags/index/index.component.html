@@ -1,113 +1,122 @@
 <div class="layout-topbar">
 
-  <!--
-  <a class="layout-topbar-logo" routerLink="">
-      <img src="assets/geslogo.jpeg" width="50px" alt="logo">
-      <span>WebGES</span>
-  </a>
-
-  <button #menubutton class="p-link layout-menu-button layout-topbar-button" >
-      <i class="pi pi-bars"></i>
-  </button>
-
-  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
-      <i class="pi pi-ellipsis-v"></i>
-  </button>
-  -->
-
-  <button #menubutton class="p-link layout-menu-button layout-topbar-button" >
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" aria-label="Menu" aria-expanded="false">
     <i class="pi pi-bars"></i>
   </button>
 
-  <div class="p-toolbar-group-center">
-    <h1>Gestão Eletrônica de Serviços</h1>
+  <h1><Strong>WebGES</Strong></h1>
+
+
+  <div #topbarmenu class="layout-topbar-menu" role="navigation" aria-label="Topbar Menu">
+
+
+    <button class="p-link layout-topbar-button" [routerLink]="'postags/perfil'" aria-label="Perfil" aria-haspopup="true">
+      <i class="pi pi-user"></i>
+      <span>Perfil</span>
+    </button>
+
+    <button class="p-link layout-topbar-button" [routerLink]="'postags/Config'" aria-label="Configurações" aria-haspopup="true">
+      <i class="pi pi-cog"></i>
+      <span>Configurações</span>
+    </button>
+
+    <button class="p-link layout-topbar-button" [routerLink]="'postags/logoff'" aria-label="logoff" aria-haspopup="true">
+      <i class="pi pi-sign-out"></i>
+      <span>Sair</span>
+    </button>
+
   </div>
 
-  <div #topbarmenu class="layout-topbar-menu">
-      <button class="p-link layout-topbar-button">
-          <i class="pi pi-user"></i>
-          <span>Profile</span>
-      </button>
-      <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-          <i class="pi pi-cog"></i>
-          <span>Settings</span>
-      </button>
-  </div>
 </div>
-
 
 
 <div class="container">
 
-  <p-toast />
-
-  <div class="card-R flex justify-content-center">
-
-    <div class="graf">
-      <p-knob [(ngModel)]="ativos" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>ativos</span>
+  <div class="card-R">
+    <div class="card-R">
+      <p class="m-0">
+        <p-badge value={{vigencia0a30}} badgeSize="large" severity="danger"/>
+      </p>
+      <p-divider align="left" type="solid">
+        <b style="background-color: white; color: black;">em 30 dias</b>
+      </p-divider>
     </div>
 
-    <div class="graf">
-      <p-knob [(ngModel)]="vigencia0a30" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>até 30 dias</span>
+    <div class="card-R">
+      <p class="m-0">
+        <p-badge value={{vigencia31a60}} badgeSize="large" severity="warning"/>
+      </p>
+      <p-divider align="left" type="solid">
+        <b style="background-color: white; color: black;">em 60 dias</b>
+      </p-divider>
     </div>
 
-    <div class="graf">
-      <p-knob [(ngModel)]="vigencia31a60" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>31 até 60 dias</span>
+    <div class="card-R">
+      <p class="m-0">
+        <p-badge value={{vigencia61a90}} badgeSize="large" severity="success"/>
+      </p>
+      <p-divider align="left" type="solid">
+        <b style="background-color: white; color: black;">em 90 dias</b>
+      </p-divider>
     </div>
 
-    <div class="graf">
-      <p-knob [(ngModel)]="vigencia61a90" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span>61 até 90 dias</span>
+    <div class="card-R">
+      <p class="m-0">
+        <p-badge value={{vigenciamaior90}} badgeSize="large" severity="info"/>
+      </p>
+        <p-divider align="left" type="solid">
+        <b style="background-color: white; color: black;">superior a 90 dias</b>
+      </p-divider>
     </div>
+  </div>
 
-    <div class="graf">
-      <p-knob [(ngModel)]="vigenciamaior90" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span> maior que 90 dias</span>
-    </div>
+  <h1><Strong>Boas vindas</Strong>, ao Sistema de Gestão Eletrônica de Serviços!</h1>
+  <h3> Aqui, você pode controlar a vigência dos seus serviços de forma eficaz. </h3>
 
-    <div class="graf">
-      <p-knob [(ngModel)]="inativos" [readonly]="true" valueColor="SlateGray" rangeColor="MediumTurquoise" />
-      <span> inativos</span>
-    </div>
+  <div class="card flex flex-wrap justify-content-center gap-2">
+
+    <p-sidebar [(visible)]="painelinfo" position="right">
+      <h3>Painel Informativo</h3>
+
+      <p>Total de Serviços: <p-badge value={{ativos+inativos}} severity="contrast"/></p>
+
+      <p-divider align="left" type="solid">
+        <b>Ativos</b>
+      </p-divider>
+      <p class="m-0">
+        <p-badge value={{ativos}} severity="contrast"/>
+      </p>
+
+      <p-divider align="left" type="solid">
+        <b>Inativos</b>
+      </p-divider>
+      <p class="m-0">
+        <p-badge value={{inativos}} severity="contrast"/>
+      </p>
+    </p-sidebar>
+
+    <p-button
+    icon="pi pi-th-large"
+    class="floating-button mr-2"
+    (onClick)="painelinfo = true"
+    [pTooltip]="tooltipContent"/>
+    <ng-template #tooltipContent>
+        <div class="flex align-items-center">
+            <span> <b>Painel</b> informativo. </span>
+        </div>
+    </ng-template>
 
   </div>
 
+  <p-toast />
+
   <div class="card-C">
-
-    <p-toolbar styleClass="mb-4 gap-2">
-      <ng-template pTemplate="left">
-        <div>
-          <p-button
-              severity="success"
-              label="Novo"
-              [rounded]="true"
-              icon="pi pi-plus"
-              class="mr-2"
-              (onClick)="btnNew()"
-              />
-        </div>
-        <div>
-        <p-button
-              severity="danger"
-              label="Excluir"
-              [rounded]="true"
-              icon="pi pi-trash"
-              (onClick)="btndeleteSelected()"
-              [disabled]="!selectedTags || !selectedTags.length"
-              />
-        </div>
-      </ng-template>
-    </p-toolbar>
-
 
     <p-table #dt  [value]="postags"
       [tableStyle]="{ 'min-width': '50rem' }"
       [paginator]="true"
-      [rows]="6"
-      [rowsPerPageOptions]="[6, 18, 36]"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 30]"
       [globalFilterFields]="['status', 'Id', 'descricao', 'categoria', 'vigencia', 'Diasvigencia', 'created_at', 'updated_at']"
       [(selection)]="selectedTags"
       [rowHover]="true"
@@ -117,35 +126,64 @@
       >
 
       <ng-template pTemplate="caption">
+
         <div class="flex align-items-center justify-content-between">
-            <h2 class="m-0">Boas-vindas ao Controle de Vigências e Renovações</h2>
+
+            <p-toolbar styleClass="mb-4 gap-4">
+
+              <ng-template pTemplate="left">
+                <div>
+                  <p-button
+                      severity="success"
+                      label="Novo"
+                      [rounded]="true"
+                      icon="pi pi-plus"
+                      class="mr-2"
+                      (onClick)="btnNew()"
+                      />
+                </div>
+                <div>
+                <p-button
+                      severity="danger"
+                      label="Excluir"
+                      [rounded]="true"
+                      icon="pi pi-trash"
+                      (onClick)="btndeleteSelected()"
+                      [disabled]="!selectedTags || !selectedTags.length"
+                      />
+                </div>
+              </ng-template>
+            </p-toolbar>
+
             <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input
-                    pInputText
-                    type="text"
-                    (input)="filterGlobal($event)"
-                    placeholder="Procurar..." />
+              <i class="pi pi-search"></i>
+              <input
+                  pInputText
+                  type="text"
+                  class="p-inputtext-lg custom-input"
+                  (input)="filterGlobal($event)"
+                  placeholder="Procurar..." />
             </span>
+
         </div>
       </ng-template>
 
       <ng-template pTemplate="header">
           <tr>
-              <th style="width: 4rem">
+              <th style="width: 4rem; background-color: black; color: #fff;">
                 <p-tableHeaderCheckbox />
               </th>
-              <th pSortableColumn="status"       style="min-width:7rem">Status <p-sortIcon field="status" /> </th>
-              <th pSortableColumn="iDTag"        style="min-width:5rem">Id <p-sortIcon field="iDTag" /> </th>
-              <th pSortableColumn="descricao"    style="min-width:15rem">Descrição <p-sortIcon field="descricao" /> </th>
-              <th pSortableColumn="categoria"    style="min-width:15rem">Categoria <p-sortIcon field="categoria" /> </th>
-              <th pSortableColumn="vigencia"     style="min-width:15rem">Expira em <p-sortIcon field="vigencia" /> </th>
-              <th pSortableColumn="Diasvigencia" style="min-width:15rem">Dias de Vigencia <p-sortIcon field="Diasvigencia" /></th>
-              <th pSortableColumn="created_at"   style="min-width:15rem">Criado em <p-sortIcon field="created_at" /></th>
-              <th pSortableColumn="updated_at"   style="min-width:15rem">Ultima atualização <p-sortIcon field="updated_at" /></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th pSortableColumn="status"       style="min-width:7rem; background-color: black; color: #fff;">Status <p-sortIcon field="status" /> </th>
+              <th pSortableColumn="iDTag"        style="min-width:5rem; background-color: black; color: #fff;">Id <p-sortIcon field="iDTag" /> </th>
+              <th pSortableColumn="descricao"    style="min-width:15rem; background-color: black; color: #fff;">Descrição <p-sortIcon field="descricao" /> </th>
+              <th pSortableColumn="categoria"    style="min-width:15rem; background-color: black; color: #fff;">Categoria <p-sortIcon field="categoria" /> </th>
+              <th pSortableColumn="vigencia"     style="min-width:15rem; background-color: black; color: #fff;">Expira em <p-sortIcon field="vigencia" /> </th>
+              <th pSortableColumn="Diasvigencia" style="min-width:15rem; background-color: black; color: #fff;">Dias de Vigencia <p-sortIcon field="Diasvigencia" /></th>
+              <th pSortableColumn="created_at"   style="min-width:15rem; background-color: black; color: #fff;">Criado em <p-sortIcon field="created_at" /></th>
+              <th pSortableColumn="updated_at"   style="min-width:15rem; background-color: black; color: #fff;">Ultima atualização <p-sortIcon field="updated_at" /></th>
+              <th style="background-color: black; color: #fff;"></th>
+              <th style="background-color: black; color: #fff;"></th>
+              <th style="background-color: black; color: #fff;"></th>
            </tr>
       </ng-template>
 
@@ -165,7 +203,7 @@
               <td>{{ postags.iDTag }}</td>
               <td>{{ postags.descricao }}</td>
               <td>{{ postags.categoria }}</td>
-              <td>{{ postags.vigencia}}</td>
+              <td>{{ postags.vigencia }}</td>
               <td>
                 <p-tag
                   [value]="postags.Diasvigencia"
@@ -216,6 +254,7 @@
     </ng-template>
 
     </p-table>
+
   </div>
 
   <p-dialog
@@ -274,7 +313,7 @@
 
                       <div class="field">
                         <label for="infor" class="block">Informações</label>
-                        <textarea type="textarea" [rows]="10" [cols]="50" pInputTextarea
+                        <textarea type="textarea" [rows]="25" [cols]="50" pInputTextarea
                           placeholder="Detalhes do Serviço"
                           id="infor"
                           name="infor"
@@ -294,7 +333,8 @@
                         <p-calendar
                           id="vigencia"
                           name="vigencia"
-                          dateFormat="dd/mm/yy"
+                          dateFormat="YYYY-MM-DD"
+                          [required]="true"
                           [inline]="true"
                           formControlName="vigencia"
                           [showIcon]="true"
@@ -304,82 +344,6 @@
                     </div>
 
                   </div>
-
-
-                  <!--
-                  <td>
-                    <img
-                        [src]="'https://th.bing.com/th/id/OIP.pQyIgeAD4YQWnAZNYAr0tgHaGs?rs=1&pid=ImgDetMain'"
-                        width="50"
-                        class="shadow-4" />
-                  </td>
-
-                  <div class="field">
-                    <label for="descricao" class="block">Descrição do Serviço</label>
-                    <input type="text" pInputText
-                      placeholder="Desrição do Serviço"
-                      id="descricao"
-                      name="descricao"
-                      formControlName="descricao" required
-                      />
-                     <small class="p-error block" *ngIf=" registroCorrente.get('descricao')?.invalid && registroCorrente.get('descricao')?.dirty">
-                     Preenchimento Obrigatório.</small>
-                  </div>
-
-                  <div class="field">
-                    <label for="categoria" class="block">Categoria</label>
-                    <span class="ui-float-label">
-                    <p-dropdown [options]="optCategoria"
-                      placeholder="Categoria do Serviço"
-                      id="categoria"
-                      name="categoria"
-                      formControlName="categoria"
-                      [style]="{'width':'100%'}" [required]="true"></p-dropdown>
-                      <small class="p-error block" *ngIf=" registroCorrente.get('categoria')?.invalid && registroCorrente.get('categoria')?.dirty">
-                        Preenchimento Obrigatório.</small>
-                    </span>
-
-                  </div>
-
-                  <div class="field">
-                    <label for="infor" class="block">Informações</label>
-                    <textarea type="textarea" [rows]="10" [cols]="50" pInputTextarea
-                      placeholder="Detalhes do Serviço"
-                      id="infor"
-                      name="infor"
-                      (reset)="false"
-                      formControlName="infor" required
-                      ></textarea>
-                    <small class="p-error block" *ngIf=" registroCorrente.get('infor')?.invalid && registroCorrente.get('infor')?.dirty">
-                      Preenchimento Obrigatório.</small>
-                  </div>
-
-                  <div class="field">
-                    <span class="ui-float-label">
-                    <p-calendar
-                      id="vigencia"
-                      name="vigencia"
-                      formControlName="vigencia"
-                      [showIcon]="true"
-                      [minDate]="minDate" />
-                    <label for="vigencica">Vigência</label>
-                    </span>
-                  </div>
-
-                  <div class="field">
-                    <label for="categoria" class="block">Status</label>
-                    <span class="ui-float-label">
-                    <p-dropdown [options]="optStatus"
-                      placeholder="Status do Serviço"
-                      id="status"
-                      name="status"
-                      formControlName="status"
-                      [style]="{'width':'100%'}" [required]="true"></p-dropdown>
-                    </span>
-                  </div>
-                -->
-
-
 
                 </form>
 

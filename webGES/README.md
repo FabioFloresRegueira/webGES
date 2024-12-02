@@ -117,9 +117,15 @@ https://stackoverflow.com/questions/61177589/what-should-i-adjusting-budget-size
 
 # estrutura
 ng generate component postags/index
+ng generate component postags/perfil
+ng generate component postags/config
+
 ng generate interface postags/tags
 ng generate service postags
 ng generate module globalprimeng
 
-
+# geração do pacote para implantação.
 ng build --configuration production 
+
+# desabilita o cache do navegador no seridor
+ng cache disable

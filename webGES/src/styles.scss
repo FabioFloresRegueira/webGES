@@ -1,10 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
 /* Temas */
-@import "primeng/resources/themes/bootstrap4-light-purple/theme.css";
 @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 @import "primeng/resources/themes/bootstrap4-dark-blue/theme.css";
 @import "primeng/resources/themes/bootstrap4-dark-purple/theme.css";
@@ -55,6 +53,7 @@
 
 .container{
   padding-top: 70px;
+  text-align: center;
 }
 
 html {
@@ -84,23 +83,32 @@ body {
 
 
 .card-R {
-  background: var(--surface-card);
-  padding: 2rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  text-align: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  .graf {
-    padding-right: 50px;
+  background: var(--surface-card);
+  padding: 0rem;
+  border-radius: 10px;
+  //margin-bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  .card-Rx {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: var(--surface-card);
+    padding: 0.1rem;
+    //margin-bottom: 1rem;
+    text-align: center;
   }
+
 
 }
 
-
 .card-C {
-  background: var(--surface-card);
+  //background: var(--surface-card);
+  background: #7c94a4;
   padding: 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
@@ -109,3 +117,4 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

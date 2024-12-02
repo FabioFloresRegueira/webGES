@@ -21,7 +21,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ListboxModule } from 'primeng/listbox';
-//import { OrderListModule } from 'primeng/orderlist';
+import { BadgeModule } from 'primeng/badge';
+import { BlockUIModule } from 'primeng/blockui';
+import { PanelModule } from 'primeng/panel';
+import { RippleModule } from 'primeng/ripple';
+import { ChipModule } from 'primeng/chip'
+import { MeterGroupModule } from 'primeng/metergroup';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { TooltipModule } from 'primeng/tooltip';
+import { SidebarModule } from 'primeng/sidebar';
+import { DividerModule } from 'primeng/divider';
 @NgModule({
   declarations: [],
   imports: [
@@ -47,6 +57,17 @@ import { ListboxModule } from 'primeng/listbox';
     RadioButtonModule,
     InputSwitchModule,
     ListboxModule,
+    BadgeModule,
+    BlockUIModule,
+    PanelModule,
+    RippleModule,
+    ChipModule,
+    MeterGroupModule,
+    AvatarModule,
+    AvatarGroupModule,
+    TooltipModule,
+    SidebarModule,
+    DividerModule
     //OrderListModule
   ]
 })

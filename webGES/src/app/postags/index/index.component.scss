@@ -135,7 +135,6 @@
 }
 //
 
-
 // linha da grid status=0 - inativo
 :host ::ng-deep .row-status {
   //background-color: rgba(235, 72, 72, 0.15) !important;
@@ -149,8 +148,15 @@
 // ref. caption de boas-vindas e campo de pesquiesa
 .flex {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  //padding: 1rem;
+  //margin-bottom: 1rem;
+  width: 100%; /* Largura responsiva */
+  height: auto; /* Altura automática para ajustar ao conteúdo */
+
 }
 
 .flex .p-input-icon-left {
@@ -159,47 +165,15 @@
 }
 
 .flex input {
-  margin-left: 3px; /* Ajuste o espaçamento conforme necessário */
-  width: 400px;
+  margin-left: 1px;
+  width: auto;
 }
-//
 
-/*
-:host .formulario {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(40, 38, 44, 0.15) !important;
-}
-*/
-
-
-
-/*
-.field{
-
-  padding-bottom: 30px;
-
-  .block {
-    padding-bottom: 15px;
-    color: blue;
-  }
-
-  .input {
-    width: 100%;
-  }
-  .textarea {
-    width: 100%;
-  }
-
-}
-*/
 
 .disabled-card {
   pointer-events: none; /* Impede interações */
   opacity: 0.5; /* Aplica um efeito visual de desabilitado */
 }
-//
-
 
 .frmrow{
   display: flex;
@@ -230,5 +204,38 @@
     color: blue;
   }
 
-  
 }
+
+//
+
+.floating-button {
+  position: fixed;
+  top: 50%; /* Centraliza verticalmente */
+  right: 0px; /* Margem de 5px do lado direito */
+  transform: translateY(-50%); /* Ajusta a posição verticalmente para o centro */
+  z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+}
+
+.custom-input {
+  width: 100%; /* Faz o input ocupar toda a largura disponível */
+  max-width: 400px; /* Define uma largura máxima */
+  padding: 10px 15px 10px 40px; /* Espaçamento interno, espaço para o ícone */
+  border: 1px solid #ccc; /* Borda padrão */
+  border-radius: 5px; /* Bordas arredondadas */
+  font-size: 16px; /* Tamanho da fonte */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transições suaves */
+}
+
+.custom-input:focus {
+  border-color: #007bff; /* Cor da borda ao focar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra ao focar */
+  outline: none; /* Remove o contorno padrão */
+}
+
+@media (max-width: 600px) {
+  .custom-input {
+    font-size: 14px; /* Tamanho da fonte menor em telas pequenas */
+    padding: 8px 12px; /* Ajusta o padding */
+  }
+}
+
