@@ -119,9 +119,22 @@ https://stackoverflow.com/questions/61177589/what-should-i-adjusting-budget-size
 ng generate component postags/index
 ng generate component postags/perfil
 ng generate component postags/config
+ng generate component postags/login
 
+# interface 
 ng generate interface postags/tags
+ng generate interface postags/usuarios
+
+# Servicos 
 ng generate service postags
+ng generate service usuarios
+ng generate service guards/usuario-nao-autenticado
+ng generate service guards/usuario-autenticado
+
+ng generate interceptor interceptors/token
+ng generate service interceptors/storageservice
+
+# modulo geral / compoentes PRIMENG
 ng generate module globalprimeng
 
 # geração do pacote para implantação.
@@ -129,3 +142,6 @@ ng build --configuration production
 
 # desabilita o cache do navegador no seridor
 ng cache disable
+
+
+# https://balta.io/blog/login-logout-protecao-de-rotas-envio-de-tokens-com-angular

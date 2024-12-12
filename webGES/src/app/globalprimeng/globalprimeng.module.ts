@@ -32,6 +32,8 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TooltipModule } from 'primeng/tooltip';
 import { SidebarModule } from 'primeng/sidebar';
 import { DividerModule } from 'primeng/divider';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 @NgModule({
   declarations: [],
   imports: [
@@ -67,7 +69,9 @@ import { DividerModule } from 'primeng/divider';
     AvatarGroupModule,
     TooltipModule,
     SidebarModule,
-    DividerModule
+    DividerModule,
+    MessagesModule,
+    MessageModule
     //OrderListModule
   ]
 })

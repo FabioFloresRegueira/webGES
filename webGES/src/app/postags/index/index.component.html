@@ -1,29 +1,87 @@
 <div class="layout-topbar">
 
+
+  <p-button #menubutton class="p-link layout-menu-button layout-topbar-button"
+    icon="pi pi-bars"
+    [rounded]="true"
+    severity="secondary"
+    aria-label="Menu"
+    aria-expanded="false" [pTooltip]="tooltipmenu"  tooltipPosition="bottom" >
+  </p-button>
+  <ng-template #tooltipmenu>
+    <div class="flex align-items-center">
+        <span> <b>Menu</b>. </span>
+    </div>
+  </ng-template>
+
+  <!--
   <button #menubutton class="p-link layout-menu-button layout-topbar-button" aria-label="Menu" aria-expanded="false">
     <i class="pi pi-bars"></i>
   </button>
+  -->
 
   <h1><Strong>WebGES</Strong></h1>
 
 
   <div #topbarmenu class="layout-topbar-menu" role="navigation" aria-label="Topbar Menu">
 
+    <p-button class="p-link layout-topbar-button" (click)="abrirTelaPerfil()"
+      icon="pi pi-user"
+      [rounded]="true"
+      severity="secondary"
+      aria-label="Perfil"
+      aria-expanded="false" [pTooltip]="tooltipperfil"  tooltipPosition="bottom" >
+      <span>Perfil</span>
+    </p-button>
+    <ng-template #tooltipperfil>
+      <div class="flex align-items-center" >
+          <span> <b>Perfil</b>. </span>
+      </div>
+    </ng-template>
 
-    <button class="p-link layout-topbar-button" [routerLink]="'postags/perfil'" aria-label="Perfil" aria-haspopup="true">
+    <p-button class="p-link layout-topbar-button" (click)="abrirTelaConfig()"
+      icon="pi pi-cog"
+      [rounded]="true"
+      severity="secondary"
+      aria-label="Configurações"
+      aria-expanded="false" [pTooltip]="tooltipconfig"  tooltipPosition="bottom" >
+      <span>Configurações</span>
+    </p-button>
+    <ng-template #tooltipconfig>
+      <div class="flex align-items-center">
+          <span> <b>Configurações</b>. </span>
+      </div>
+    </ng-template>
+
+    <p-button class="p-link layout-topbar-button" (click)="deslogar()"
+      icon="pi pi-sign-out"
+      [rounded]="true"
+      severity="secondary"
+      aria-label="Sair"
+      aria-expanded="false" [pTooltip]="tooltipsair"  tooltipPosition="bottom" >
+      <span>Sair</span>
+    </p-button>
+    <ng-template #tooltipsair>
+      <div class="flex align-items-center">
+          <span> <b>Sair</b>. </span>
+      </div>
+    </ng-template>
+
+    <!--
+    <button class="p-link layout-topbar-button" (click)="abrirTelaPerfil()" [routerLink]="'postags/perfil'" aria-label="Perfil" aria-haspopup="true">
       <i class="pi pi-user"></i>
       <span>Perfil</span>
     </button>
-
-    <button class="p-link layout-topbar-button" [routerLink]="'postags/Config'" aria-label="Configurações" aria-haspopup="true">
+    <button class="p-link layout-topbar-button" (click)="abrirTelaConfig()" [routerLink]="'postags/Config'" aria-label="Configurações" aria-haspopup="true">
       <i class="pi pi-cog"></i>
       <span>Configurações</span>
     </button>
 
-    <button class="p-link layout-topbar-button" [routerLink]="'postags/logoff'" aria-label="logoff" aria-haspopup="true">
+    <button class="p-link layout-topbar-button" (click)="deslogar()" aria-label="logoff" aria-haspopup="true">
       <i class="pi pi-sign-out"></i>
       <span>Sair</span>
     </button>
+    -->
 
   </div>
 

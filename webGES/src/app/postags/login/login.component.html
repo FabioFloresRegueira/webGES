@@ -1,0 +1,29 @@
+<p-card class="container">
+  <p-card class="card-login">
+    <p-header>Login</p-header>
+    <form [formGroup]="registroCorrente" novalidate>
+      <div class="conteudo-login">
+        <div class="form-field-full">
+          <label for="email">Email</label>
+          <input id="email" type="email" pInputText formControlName="email" placeholder="Ex. perukas@example.com">
+          <div *ngIf="registroCorrente.get('email')!.hasError('email') && registroCorrente.get('email')!.touched" class="p-error">
+            Por favor informe um email válido
+          </div>
+          <div *ngIf="registroCorrente.get('email')!.hasError('required') && registroCorrente.get('email')!.touched" class="p-error">
+            Email é <strong>obrigatório</strong>
+          </div>
+        </div>
+        <div class="form-field-full">
+          <label for="senha">Senha</label>
+          <input id="senha" type="password" pPassword formControlName="senha">
+          <div *ngIf="registroCorrente.get('senha')!.invalid && registroCorrente.get('senha')!.touched" class="p-error">
+            Senha é <strong>obrigatória</strong>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button pButton type="button" label="Entrar" icon="pi pi-check" class="full" (click)="logar()"></button>
+    </p-footer>
+  </p-card>
+</p-card>

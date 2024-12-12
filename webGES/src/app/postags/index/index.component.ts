@@ -11,6 +11,7 @@ import { isDate } from 'node:util/types';
 import moment from 'moment';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
+import { UsuariosService } from '../../usuarios.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { Table } from 'primeng/table';
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss',
-  providers: [PostagsService, MessageService, ConfirmationService]
+  providers: [PostagsService, UsuariosService, MessageService, ConfirmationService]
 })
 
 export class IndexComponent implements OnInit {
@@ -54,7 +55,7 @@ export class IndexComponent implements OnInit {
   vigenciamaior90: number = 0;
   inativos = 0;
 
-  constructor(public postagsservice: PostagsService,
+  constructor(public postagsservice: PostagsService, public usuariosservice: UsuariosService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private route: Router,
@@ -184,6 +185,16 @@ export class IndexComponent implements OnInit {
 
   }
 
+  deslogar(){
+    this.usuariosservice.deslogar();
+  }
+  abrirTelaPerfil(){
+    this.route.navigate(['postags/perfil']);
+  }
+  abrirTelaConfig(){
+    this.route.navigate(['postags/config']); 
+  }
+  
   btnViewer(iD: number) {
     this.operacaoMode = "v"; // visualizar.
     this.isDisabled = true;
