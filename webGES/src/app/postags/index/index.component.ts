@@ -12,7 +12,7 @@ import moment from 'moment';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UsuariosService } from '../../usuarios.service';
-
+import { ThemeService } from '../../theme.service';
 
 @Component({
   selector: 'app-index',
@@ -192,9 +192,9 @@ export class IndexComponent implements OnInit {
     this.route.navigate(['postags/perfil']);
   }
   abrirTelaConfig(){
-    this.route.navigate(['postags/config']); 
+    this.route.navigate(['postags/config']);
   }
-  
+
   btnViewer(iD: number) {
     this.operacaoMode = "v"; // visualizar.
     this.isDisabled = true;

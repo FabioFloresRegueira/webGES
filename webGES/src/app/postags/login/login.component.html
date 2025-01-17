@@ -1,29 +1,89 @@
-<p-card class="container">
-  <p-card class="card-login">
-    <p-header>Login</p-header>
-    <form [formGroup]="registroCorrente" novalidate>
-      <div class="conteudo-login">
-        <div class="form-field-full">
-          <label for="email">Email</label>
-          <input id="email" type="email" pInputText formControlName="email" placeholder="Ex. perukas@example.com">
-          <div *ngIf="registroCorrente.get('email')!.hasError('email') && registroCorrente.get('email')!.touched" class="p-error">
-            Por favor informe um email válido
-          </div>
-          <div *ngIf="registroCorrente.get('email')!.hasError('required') && registroCorrente.get('email')!.touched" class="p-error">
-            Email é <strong>obrigatório</strong>
-          </div>
+<div class="login-wrapper">
+  <p-card class="login-container">
+    <div class="login-content">
+      <!-- Lado do Formulário -->
+      <div class="login-form-side">
+        <div class="login-header">
+          <h1 class="app-title">Gestão Eletrônica de Serviço</h1>
+          <p class="app-subtitle">Informe suas credenciais para acessar o sistema</p>
         </div>
-        <div class="form-field-full">
-          <label for="senha">Senha</label>
-          <input id="senha" type="password" pPassword formControlName="senha">
-          <div *ngIf="registroCorrente.get('senha')!.invalid && registroCorrente.get('senha')!.touched" class="p-error">
-            Senha é <strong>obrigatória</strong>
+
+        <form [formGroup]="registroCorrente" class="login-form" (ngSubmit)="logar()">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <span class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+              <input 
+                id="email" 
+                type="email" 
+                pInputText 
+                formControlName="email" 
+                placeholder="Digite seu e-mail"
+                [ngClass]="{'ng-invalid ng-dirty': registroCorrente.get('email')?.invalid && registroCorrente.get('email')?.touched}"
+              >
+            </span>
+            <small class="p-error" *ngIf="registroCorrente.get('email')?.hasError('required') && registroCorrente.get('email')?.touched">
+              <i class="pi pi-exclamation-circle"></i> E-mail é obrigatório
+            </small>
+            <small class="p-error" *ngIf="registroCorrente.get('email')?.hasError('email') && registroCorrente.get('email')?.touched">
+              <i class="pi pi-exclamation-circle"></i> Formato de e-mail inválido
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <span class="p-input-icon-left">
+              <i class="pi pi-lock"></i>
+              <input 
+                id="senha" 
+                type="password" 
+                pPassword 
+                [feedback]="false"
+                formControlName="senha" 
+                placeholder="Digite sua senha"
+                [ngClass]="{'ng-invalid ng-dirty': registroCorrente.get('senha')?.invalid && registroCorrente.get('senha')?.touched}"
+              >
+            </span>
+            <small class="p-error" *ngIf="registroCorrente.get('senha')?.invalid && registroCorrente.get('senha')?.touched">
+              <i class="pi pi-exclamation-circle"></i> Senha é obrigatória
+            </small>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              pButton 
+              type="submit" 
+              label="Entrar" 
+              icon="pi pi-sign-in" 
+              [loading]="isLoading"
+              [disabled]="registroCorrente.invalid || isLoading"
+              class="p-button-primary login-button">
+            </button>
+            
+            <div class="forgot-password">
+              <a href="#" class="p-link">Esqueceu sua senha?</a>
+            </div>
+          </div>
+        </form>
+
+        <div class="login-footer">
+          <p class="privacy-policy">
+            <i class="pi pi-shield"></i>
+            <a href="#" class="p-link">Política de Privacidade</a>
+          </p>
+          <p class="copyright">© {{currentYear}} WebGES. Todos os direitos reservados.</p>
+        </div>
+      </div>
+
+      <!-- Lado da Imagem -->
+      <div class="login-image-side">
+        <div class="image-overlay">
+          <div class="brand-message">
+            <h2>Boas-vindas ao WebGES</h2>
+            <p class="slogan">O caminho certo no controle da <strong>vigência</strong> de serviços de forma <strong>eficaz</strong>.</p>
           </div>
         </div>
       </div>
-    </form>
-    <p-footer>
-      <button pButton type="button" label="Entrar" icon="pi pi-check" class="full" (click)="logar()"></button>
-    </p-footer>
+    </div>
   </p-card>
-</p-card>
+</div>

@@ -34,6 +34,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { DividerModule } from 'primeng/divider';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { CheckboxModule } from 'primeng/checkbox';
+import { PasswordModule } from 'primeng/password';
 @NgModule({
   declarations: [],
   imports: [
@@ -71,7 +73,9 @@ import { MessageModule } from 'primeng/message';
     SidebarModule,
     DividerModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    CheckboxModule,
+    PasswordModule
     //OrderListModule
   ]
 })

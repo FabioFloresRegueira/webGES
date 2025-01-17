@@ -67,6 +67,13 @@ Run `npm -v` = 18.8.0
 Run `yarn -v` = 1.22.19 
 
 
+# Atualizar aplicativo angular v117.0 > v18.0
+Run ng update @angular/core@18 @angular/cli@18
+Run ng update @angular/cli @angular/core
+# instala a versao mais recente do typescrip
+Run npm install -g typescript@latest
+Run tsc -v 
+
 
 # exemplos
 https://www.itsolutionstuff.com/post/angular-17-crud-application-tutorial-exampleexample.html
@@ -95,6 +102,17 @@ added 1 package, and audited 929 packages in 8s
 2 moderate severity vulnerabilities
 To address all issues (including breaking changes), run:
   npm audit fix --force
+Run `npm audit` for details.
+
+# PRIMENG THEMES
+npm install primeng @primeng/themes
+# ------------------
+up to date, audited 934 packages in 26s
+119 packages are looking for funding
+  run `npm fund` for details
+11 vulnerabilities (3 low, 4 moderate, 4 high)
+To address all issues, run:
+  npm audit fix
 Run `npm audit` for details.
 
 # instalando a biblioteca moment para conversões de datas 

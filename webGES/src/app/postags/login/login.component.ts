@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
 
   usuarios: Usuarios[] = [];
   registroCorrente: FormGroup;
+  isLoading: boolean = false;
+  currentYear: number = new Date().getFullYear();
 
   constructor(public usuariosservice: UsuariosService,
     private messageService: MessageService,

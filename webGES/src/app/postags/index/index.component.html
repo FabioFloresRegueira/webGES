@@ -1,6 +1,5 @@
 <div class="layout-topbar">
 
-
   <p-button #menubutton class="p-link layout-menu-button layout-topbar-button"
     icon="pi pi-bars"
     [rounded]="true"
@@ -14,14 +13,7 @@
     </div>
   </ng-template>
 
-  <!--
-  <button #menubutton class="p-link layout-menu-button layout-topbar-button" aria-label="Menu" aria-expanded="false">
-    <i class="pi pi-bars"></i>
-  </button>
-  -->
-
   <h1><Strong>WebGES</Strong></h1>
-
 
   <div #topbarmenu class="layout-topbar-menu" role="navigation" aria-label="Topbar Menu">
 
@@ -66,22 +58,6 @@
           <span> <b>Sair</b>. </span>
       </div>
     </ng-template>
-
-    <!--
-    <button class="p-link layout-topbar-button" (click)="abrirTelaPerfil()" [routerLink]="'postags/perfil'" aria-label="Perfil" aria-haspopup="true">
-      <i class="pi pi-user"></i>
-      <span>Perfil</span>
-    </button>
-    <button class="p-link layout-topbar-button" (click)="abrirTelaConfig()" [routerLink]="'postags/Config'" aria-label="Configurações" aria-haspopup="true">
-      <i class="pi pi-cog"></i>
-      <span>Configurações</span>
-    </button>
-
-    <button class="p-link layout-topbar-button" (click)="deslogar()" aria-label="logoff" aria-haspopup="true">
-      <i class="pi pi-sign-out"></i>
-      <span>Sair</span>
-    </button>
-    -->
 
   </div>
 
@@ -151,7 +127,13 @@
       <p class="m-0">
         <p-badge value={{inativos}} severity="contrast"/>
       </p>
-    </p-sidebar>
+
+      <h3>themas</h3>
+      <p-divider align="left" type="solid">
+        <b>Saga-blue</b>
+      </p-divider>
+
+      </p-sidebar>
 
     <p-button
     icon="pi pi-th-large"

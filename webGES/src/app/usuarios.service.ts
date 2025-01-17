@@ -10,8 +10,8 @@ import { StorageService } from './interceptors/storageservice.ts.service';
 })
 export class UsuariosService {
 
-  public apiUrlUsuario = "http://localhost:3001/monitorar/api/tags";
-  //private apiURL = "https://fabio4678.c44.integrator.host/monitorar/api/usuarios";
+  //public apiUrlUsuario = "http://localhost:3001/monitorar/api/tags";
+  private apiURL = "https://fabio4678.c44.integrator.host/monitorar/api/usuarios";
 
   constructor(private httpClient: HttpClient,
     private router: Router, private storageservice: StorageService) { }
