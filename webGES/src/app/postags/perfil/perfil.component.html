@@ -1,1 +1,77 @@
-<p>perfil works!</p>
+<div class="perfil-container">
+    <div class="grid">
+        <div class="col-12">
+            <p-card>
+                <div class="perfil-header">
+                    <div class="foto-container">
+                        <p-avatar [image]="usuario.foto" styleClass="mr-2" size="xlarge" shape="circle">
+                            <p-overlayPanel #op>
+                                <p-fileUpload mode="basic" chooseLabel="Alterar foto" 
+                                    [auto]="true" accept="image/*" styleClass="p-button-text">
+                                </p-fileUpload>
+                            </p-overlayPanel>
+                        </p-avatar>
+                        <button pButton type="button" icon="pi pi-camera" 
+                            (click)="op.toggle($event)" 
+                            class="p-button-rounded p-button-text editar-foto">
+                        </button>
+                    </div>
+                    <div class="info-basica">
+                        <h1>{{usuario.nome}}</h1>
+                        <h2>{{usuario.cargo}}</h2>
+                        <p class="localizacao">
+                            <i class="pi pi-map-marker"></i>
+                            {{usuario.localizacao}}
+                        </p>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+
+        <div class="col-12">
+            <p-tabView>
+                <p-tabPanel header="Informações Pessoais">
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <p-panel header="Contato" styleClass="mb-3">
+                                <div class="info-item">
+                                    <i class="pi pi-envelope"></i>
+                                    <span>{{usuario.email}}</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="pi pi-phone"></i>
+                                    <span>{{usuario.telefone}}</span>
+                                </div>
+                            </p-panel>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <p-panel header="Sobre" styleClass="mb-3">
+                                <p>{{usuario.sobre}}</p>
+                            </p-panel>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <p-button label="Editar Perfil" 
+                                icon="pi pi-user-edit" 
+                                (onClick)="atualizarPerfil()"
+                                styleClass="p-button-primary">
+                            </p-button>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                
+                <p-tabPanel header="Configurações">
+                    <div class="grid">
+                        <div class="col-12">
+                            <p-panel header="Preferências">
+                                <!-- Conteúdo das configurações aqui -->
+                                <p>Configurações do perfil serão adicionadas aqui.</p>
+                            </p-panel>
+                        </div>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</div>

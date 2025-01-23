@@ -1,193 +1,145 @@
-// Barra superior topbar
+// Variables
+:root {
+  --topbar-height: 5rem;
+  --button-size: 3rem;
+  --logo-width: 300px;
+  --mobile-breakpoint: 991px;
+}
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin focus-state {
+  outline: 0 none;
+  outline-offset: 0;
+  transition: box-shadow 0.2s;
+  box-shadow: var(--focus-ring);
+}
+
+// Layout Topbar
 .layout-topbar {
+  @include flex-center;
   position: fixed;
-  height: 5rem;
-  z-index: 997;
+  height: var(--topbar-height);
+  width: 100%;
   left: 0;
   top: 0;
-  width: 100%;
+  z-index: 997;
   padding: 0 2rem;
   background-color: var(--surface-card);
   transition: left 0.2s;
-  display: flex;
-  align-items: center;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
-}
-.layout-topbar .layout-topbar-logo {
-  display: flex;
-  align-items: center;
-  color: var(--surface-900);
-  font-size: 1.5rem;
-  font-weight: 500;
-  width: 300px;
-  border-radius: 12px;
-}
-.layout-topbar .layout-topbar-logo img {
-  height: 2.5rem;
-  margin-right: 0.5rem;
-}
-.layout-topbar .layout-topbar-logo:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  transition: box-shadow 0.2s;
-  box-shadow: var(--focus-ring);
-}
-.layout-topbar .layout-topbar-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  color: var(--text-color-secondary);
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.layout-topbar .layout-topbar-button:hover {
-  color: var(--text-color);
-  background-color: var(--surface-hover);
-}
-.layout-topbar .layout-topbar-button:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  transition: box-shadow 0.2s;
-  box-shadow: var(--focus-ring);
-}
-.layout-topbar .layout-topbar-button i {
-  font-size: 1.5rem;
-}
-.layout-topbar .layout-topbar-button span {
-  font-size: 1rem;
-  display: none;
-}
-.layout-topbar .layout-menu-button {
-  margin-left: 2rem;
-  //margin-right: 10rem;
-}
-.layout-topbar .layout-topbar-menu-button {
-  display: none;
-}
-.layout-topbar .layout-topbar-menu-button i {
-  font-size: 1.25rem;
-}
-.layout-topbar .layout-topbar-menu {
-  margin: 0 0 0 auto;
-  padding: 0;
-  list-style: none;
-  display: flex;
-}
-.layout-topbar .layout-topbar-menu .layout-topbar-button {
-  margin-left: 1rem;
-}
-@media (max-width: 991px) {
-  .layout-topbar {
-    justify-content: space-between;
-  }
-  .layout-topbar .layout-topbar-logo {
-    width: auto;
-    order: 2;
-  }
-  .layout-topbar .layout-menu-button {
-    margin-left: 0;
-    order: 1;
-  }
-  .layout-topbar .layout-topbar-menu-button {
-    display: inline-flex;
-    margin-left: 0;
-    order: 3;
-  }
-  .layout-topbar .layout-topbar-menu {
-    margin-left: 0;
-    position: absolute;
-    flex-direction: column;
-    background-color: var(--surface-overlay);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    padding: 1rem;
-    right: 2rem;
-    top: 5rem;
-    min-width: 15rem;
-    display: none;
-    -webkit-animation: scalein 0.15s linear;
-    animation: scalein 0.15s linear;
-  }
-  .layout-topbar .layout-topbar-menu.layout-topbar-menu-mobile-active {
-    display: block;
-  }
-  .layout-topbar .layout-topbar-menu .layout-topbar-button {
-    margin-left: 0;
-    display: flex;
-    width: 100%;
-    height: auto;
-    justify-content: flex-start;
-    border-radius: 12px;
-    padding: 1rem;
-  }
-  .layout-topbar .layout-topbar-menu .layout-topbar-button i {
-    font-size: 1rem;
-    margin-right: 0.5rem;
-  }
-  .layout-topbar .layout-topbar-menu .layout-topbar-button span {
-    font-weight: medium;
-    display: block;
-  }
-}
-//
+  box-shadow: 
+    0px 3px 5px rgba(0, 0, 0, 0.02),
+    0px 0px 2px rgba(0, 0, 0, 0.05),
+    0px 1px 4px rgba(0, 0, 0, 0.08);
 
-// linha da grid status=0 - inativo
-:host ::ng-deep .row-status {
-  //background-color: rgba(235, 72, 72, 0.15) !important;
-  background-color:  darkgrey !important;
+  &-logo {
+    @include flex-center;
+    width: var(--logo-width);
+    color: var(--surface-900);
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 12px;
+
+    img {
+      height: 2.5rem;
+      margin-right: 0.5rem;
+    }
+
+    &:focus {
+      @include focus-state;
+    }
+  }
+
+  &-button {
+    @include flex-center;
+    justify-content: center;
+    position: relative;
+    width: var(--button-size);
+    height: var(--button-size);
+    color: var(--text-color-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      color: var(--text-color);
+      background-color: var(--surface-hover);
+    }
+
+    &:focus {
+      @include focus-state;
+    }
+
+    i {
+      font-size: 1.5rem;
+    }
+
+    span {
+      font-size: 1rem;
+      display: none;
+    }
+  }
+
+  // ... existing code ...
+
+  &-menu {
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+    display: flex;
+
+    .layout-topbar-button {
+      margin-left: 1rem;
+    }
+  }
+}
+
+// Grid Styles
+.row-status {
+  background-color: darkgrey !important;
   text-decoration: line-through;
   color: whitesmoke;
 }
-//
 
-
-// ref. caption de boas-vindas e campo de pesquiesa
+// Flex Layout
 .flex {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  //padding: 1rem;
-  //margin-bottom: 1rem;
-  width: 100%; /* Largura responsiva */
-  height: auto; /* Altura automática para ajustar ao conteúdo */
+  width: 100%;
+  height: auto;
 
+  .p-input-icon-left {
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    margin-left: 1px;
+    width: auto;
+  }
 }
 
-.flex .p-input-icon-left {
-  display: flex;
-  align-items: center;
-}
-
-.flex input {
-  margin-left: 1px;
-  width: auto;
-}
-
-
-.disabled-card {
-  pointer-events: none; /* Impede interações */
-  opacity: 0.5; /* Aplica um efeito visual de desabilitado */
-}
-
-.frmrow{
+// Form Styles
+.frmrow {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-
 }
 
-.frmcols{
+.frmcols {
   padding-right: 20px;
   border-radius: 10px;
 
-  .input {
+  .input,
+  .textarea {
     width: 100%;
   }
 
@@ -195,47 +147,65 @@
     margin-bottom: 50px;
   }
 
-  .textarea {
-    width: 100%;
-  }
-
   .block {
     padding-bottom: 15px;
     color: blue;
   }
-
 }
 
-//
+// Utility Classes
+.disabled-card {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
+// Floating Button
 .floating-button {
   position: fixed;
-  top: 50%; /* Centraliza verticalmente */
-  right: 0px; /* Margem de 5px do lado direito */
-  transform: translateY(-50%); /* Ajusta a posição verticalmente para o centro */
-  z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
 }
 
+// Custom Input
 .custom-input {
-  width: 100%; /* Faz o input ocupar toda a largura disponível */
-  max-width: 400px; /* Define uma largura máxima */
-  padding: 10px 15px 10px 40px; /* Espaçamento interno, espaço para o ícone */
-  border: 1px solid #ccc; /* Borda padrão */
-  border-radius: 5px; /* Bordas arredondadas */
-  font-size: 16px; /* Tamanho da fonte */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Transições suaves */
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px 10px 40px;
+  border: 1px solid var(--surface-border, #ccc);
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:focus {
+    border-color: var(--primary-color, #007bff);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
 }
 
-.custom-input:focus {
-  border-color: #007bff; /* Cor da borda ao focar */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra ao focar */
-  outline: none; /* Remove o contorno padrão */
-}
+// Media Queries
+@media (max-width: var(--mobile-breakpoint)) {
+  .layout-topbar {
+    justify-content: space-between;
 
-@media (max-width: 600px) {
+    .layout-topbar-logo {
+      width: auto;
+      order: 2;
+    }
+
+    .layout-menu-button {
+      margin-left: 0;
+      order: 1;
+    }
+
+    // ... existing mobile styles ...
+  }
+
   .custom-input {
-    font-size: 14px; /* Tamanho da fonte menor em telas pequenas */
-    padding: 8px 12px; /* Ajusta o padding */
+    font-size: 0.875rem;
+    padding: 8px 12px;
   }
 }
 

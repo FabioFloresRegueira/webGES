@@ -163,3 +163,6 @@ ng cache disable
 
 
 # https://balta.io/blog/login-logout-protecao-de-rotas-envio-de-tokens-com-angular
+
+npm show @angular/cli versions
+npm install -g @angular/cl@i17.3.11

@@ -30,6 +30,8 @@ import { ThemeService } from '../../theme.service';
 
 export class IndexComponent implements OnInit {
 
+  loading: boolean = true;
+
   tagDialog: boolean = false;
   isDisabled: boolean = false;
   painelinfo: boolean = false;

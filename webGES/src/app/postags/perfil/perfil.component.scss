@@ -1,0 +1,68 @@
+.perfil-container {
+    padding: 2rem;
+    
+    .perfil-header {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding: 1rem;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    .foto-container {
+        position: relative;
+        
+        .editar-foto {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+    .info-basica {
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: var(--text-color);
+        }
+
+        h2 {
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+            color: var(--text-color-secondary);
+        }
+
+        .localizacao {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color-secondary);
+            
+            i {
+                font-size: 1rem;
+            }
+
+            @media screen and (max-width: 768px) {
+                justify-content: center;
+            }
+        }
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color-secondary);
+
+        i {
+            color: var(--primary-color);
+        }
+    }
+}

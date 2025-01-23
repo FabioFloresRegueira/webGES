@@ -36,6 +36,9 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
+import { FileUploadModule } from 'primeng/fileupload';
+import { TabViewModule } from 'primeng/tabview';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   declarations: [],
   imports: [
@@ -75,7 +78,11 @@ import { PasswordModule } from 'primeng/password';
     MessagesModule,
     MessageModule,
     CheckboxModule,
-    PasswordModule
+    PasswordModule,
+    FileUploadModule,
+    TabViewModule,
+    OverlayPanelModule
+    
     //OrderListModule
   ]
 })
